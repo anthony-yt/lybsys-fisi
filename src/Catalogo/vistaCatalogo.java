@@ -12,13 +12,13 @@ public class vistaCatalogo extends JPanel {
     private JButton btnBuscar;
     private JPanel panelResultados;
 
-    private CatalogController catalogController;
+    private ControladorCatalogo controladorCatalogo;
 
     public vistaCatalogo() {
-        catalogController = new CatalogController(); // usamos el controlador real
+        controladorCatalogo = new ControladorCatalogo(); // usamos el controlador real
         initComponents();
         // Mostrar todos los libros al inicio
-        mostrarLibros(catalogController.getAllBooks());
+        mostrarLibros(controladorCatalogo.getTodosLosLibros());
     }
 
     private void initComponents() {
@@ -68,7 +68,7 @@ public class vistaCatalogo extends JPanel {
         String categoriaFiltro = cbCategoria.getSelectedItem().toString();
         boolean soloDisponibles = chkDisponibles.isSelected();
 
-        List<Book> resultados = catalogController.search(
+        List<Libro> resultados = controladorCatalogo.buscar(
                 tituloFiltro,
                 categoriaFiltro,
                 soloDisponibles,
@@ -78,7 +78,7 @@ public class vistaCatalogo extends JPanel {
         mostrarLibros(resultados);
     }
 
-    private void mostrarLibros(List<Book> lista) {
+    private void mostrarLibros(List<Libro> lista) {
         panelResultados.removeAll();
 
         if (lista.isEmpty()) {
@@ -86,17 +86,17 @@ public class vistaCatalogo extends JPanel {
             lbl.setFont(new Font("Dubai", Font.PLAIN, 16));
             panelResultados.add(lbl);
         } else {
-            for (Book libro : lista) {
-                JPanel card = new JPanel(new BorderLayout(10, 10));
-                card.setPreferredSize(new Dimension(220, 160)); // Tamaño fijo
-                card.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
-                card.setBackground(Color.WHITE);
-                card.setOpaque(true);
+            for (Libro libro : lista) {
+                JPanel tarjeta = new JPanel(new BorderLayout(10, 10));
+                tarjeta.setPreferredSize(new Dimension(220, 160)); // Tamaño fijo
+                tarjeta.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
+                tarjeta.setBackground(Color.WHITE);
+                tarjeta.setOpaque(true);
 
-                JLabel lblTitulo = new JLabel("<html><b>" + libro.getTitle() + "</b></html>");
+                JLabel lblTitulo = new JLabel("<html><b>" + libro.getTitulo() + "</b></html>");
                 lblTitulo.setFont(new Font("Dubai", Font.BOLD, 14));
-                JLabel lblCat = new JLabel("Categoría: " + libro.getCategory());
-                JLabel lblDisp = new JLabel(libro.isAvailable() ? "Disponible ✅" : "No disponible ❌");
+                JLabel lblCat = new JLabel("Categoría: " + libro.getCategoria());
+                JLabel lblDisp = new JLabel(libro.isDisponible() ? "Disponible ✅" : "No disponible ❌");
 
                 JPanel info = new JPanel(new GridLayout(3, 1));
                 info.setOpaque(false);
@@ -112,16 +112,16 @@ public class vistaCatalogo extends JPanel {
 
                 btnDetalle.addActionListener(e -> JOptionPane.showMessageDialog(
                         this,
-                        libro.getTitle()
-                        + "\nCategoría: " + libro.getCategory()
-                        + "\nDisponible: " + (libro.isAvailable() ? "Sí" : "No"),
+                        libro.getTitulo()
+                        + "\nCategoría: " + libro.getCategoria()
+                        + "\nDisponible: " + (libro.isDisponible() ? "Sí" : "No"),
                         "Detalle del libro",
                         JOptionPane.INFORMATION_MESSAGE
                 ));
 
-                card.add(info, BorderLayout.CENTER);
-                card.add(btnDetalle, BorderLayout.SOUTH);
-                panelResultados.add(card);
+                tarjeta.add(info, BorderLayout.CENTER);
+                tarjeta.add(btnDetalle, BorderLayout.SOUTH);
+                panelResultados.add(tarjeta);
             }
         }
 
