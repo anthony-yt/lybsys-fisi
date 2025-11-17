@@ -28,6 +28,7 @@ public class vistaInicio extends JPanel {
     private JLabel imgChicoLector;
     private JPanel panelBarraSuperior;
     private JTextField txtBarraBusqueda;  
+    private barraBusqueda buscador;
 
     /**
      * Constructor de la clase vistaInicio.
@@ -57,6 +58,7 @@ public class vistaInicio extends JPanel {
         btnBuscar = new JButton();
         etiInformacion = new JLabel();
         imgChicoLector = new JLabel();
+        buscador = new barraBusqueda(txtBarraBusqueda);
 
         // Configurar fondo blanco del panel principal
         setBackground(new Color(255, 255, 255));
@@ -105,6 +107,7 @@ public class vistaInicio extends JPanel {
                 .addGap(9, 9, 9))
         );
 
+        txtBarraBusqueda.setFont(new Font("Segoe UI", 0, 16));
         // Configurar barra de búsqueda con alineación izquierda
         txtBarraBusqueda.setHorizontalAlignment(JTextField.LEFT);
         // Agregar evento para buscar al presionar Enter
