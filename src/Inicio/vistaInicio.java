@@ -100,7 +100,7 @@ public class vistaHome extends JPanel {
         etiInformacion.setBorder(BorderFactory.createLineBorder(new Color(204, 204, 204)));
         etiInformacion.setHorizontalTextPosition(SwingConstants.LEADING);
 
-        imgChicoLector.setIcon(new ImageIcon(getClass().getResource("/imagenes/chicolector.png")));
+        imgChicoLector.setIcon(new ImageIcon(getClass().getResource("/recursos/chicolector.png")));
 
         javax.swing.GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);

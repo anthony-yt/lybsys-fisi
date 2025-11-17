@@ -78,7 +78,7 @@ public class Sidebar extends JFrame {
             }
         });
 
-        imgLogoFisi.setIcon(new ImageIcon(getClass().getResource("/imagenes/logo-fisi.png")));
+        imgLogoFisi.setIcon(new ImageIcon(getClass().getResource("/recursos/logo-fisi.png")));
 
         GroupLayout jPanel1Layout = new GroupLayout(panelBarraLateral);
         panelBarraLateral.setLayout(jPanel1Layout);
