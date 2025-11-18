@@ -25,7 +25,7 @@ public class vistaCatalogo extends JPanel {
         setBackground(new Color(245, 247, 250));
         setLayout(new BorderLayout(10, 10));
 
-        // 🔹 Panel de filtros
+        // Panel de filtros
         JPanel panelFiltros = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
         panelFiltros.setBackground(new Color(230, 240, 255));
 
@@ -45,16 +45,16 @@ public class vistaCatalogo extends JPanel {
 
         add(panelFiltros, BorderLayout.NORTH);
 
-        // 🔹 Panel de resultados
+        // Panel de resultados
         panelResultados = new JPanel();
         panelResultados.setBackground(Color.WHITE);
-        panelResultados.setLayout(new GridLayout(0, 2, 20, 20)); // 2 columnas fijas, filas automáticas
+        panelResultados.setLayout(new GridLayout(0, 2, 20, 20));
 
-        // 🔹 Scroll vertical
+        // Scroll vertical
         JScrollPane scroll = new JScrollPane(panelResultados);
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scroll.getVerticalScrollBar().setUnitIncrement(16); // suaviza el scroll
+        scroll.getVerticalScrollBar().setUnitIncrement(16);
         scroll.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         add(scroll, BorderLayout.CENTER);
@@ -82,13 +82,13 @@ public class vistaCatalogo extends JPanel {
         panelResultados.removeAll();
 
         if (lista.isEmpty()) {
-            JLabel lbl = new JLabel("❌ No se encontraron libros.", SwingConstants.CENTER);
+            JLabel lbl = new JLabel("No se encontraron libros.", SwingConstants.CENTER);
             lbl.setFont(new Font("Dubai", Font.PLAIN, 16));
             panelResultados.add(lbl);
         } else {
             for (Book libro : lista) {
                 JPanel card = new JPanel(new BorderLayout(10, 10));
-                card.setPreferredSize(new Dimension(220, 160)); // Tamaño fijo
+                card.setPreferredSize(new Dimension(220, 160));
                 card.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
                 card.setBackground(Color.WHITE);
                 card.setOpaque(true);
@@ -96,7 +96,7 @@ public class vistaCatalogo extends JPanel {
                 JLabel lblTitulo = new JLabel("<html><b>" + libro.getTitle() + "</b></html>");
                 lblTitulo.setFont(new Font("Dubai", Font.BOLD, 14));
                 JLabel lblCat = new JLabel("Categoría: " + libro.getCategory());
-                JLabel lblDisp = new JLabel(libro.isAvailable() ? "Disponible ✅" : "No disponible ❌");
+                JLabel lblDisp = new JLabel(libro.isAvailable() ? "Disponible" : "No disponible");
 
                 JPanel info = new JPanel(new GridLayout(3, 1));
                 info.setOpaque(false);
@@ -110,14 +110,7 @@ public class vistaCatalogo extends JPanel {
                 btnDetalle.setFocusPainted(false);
                 btnDetalle.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-                btnDetalle.addActionListener(e -> JOptionPane.showMessageDialog(
-                        this,
-                        libro.getTitle()
-                        + "\nCategoría: " + libro.getCategory()
-                        + "\nDisponible: " + (libro.isAvailable() ? "Sí" : "No"),
-                        "Detalle del libro",
-                        JOptionPane.INFORMATION_MESSAGE
-                ));
+                btnDetalle.addActionListener(e -> abrirDetalleLibro(libro));
 
                 card.add(info, BorderLayout.CENTER);
                 card.add(btnDetalle, BorderLayout.SOUTH);
@@ -127,5 +120,16 @@ public class vistaCatalogo extends JPanel {
 
         panelResultados.revalidate();
         panelResultados.repaint();
+    }
+
+    private void abrirDetalleLibro(Book libro) {
+        JFrame frameDetalle = new JFrame("Detalle del Libro: " + libro.getTitle());
+        frameDetalle.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frameDetalle.setSize(800, 600);
+        frameDetalle.setLocationRelativeTo(this);
+        
+        BookDetailView detailView = new BookDetailView(libro, catalogController);
+        frameDetalle.add(detailView);
+        frameDetalle.setVisible(true);
     }
 }

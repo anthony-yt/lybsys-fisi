@@ -1,0 +1,9 @@
+src/Catalogo/Book.java
+src/Catalogo/BookDetailView.java
+src/Catalogo/CatalogController.java
+src/Catalogo/LoanController.java
+src/Catalogo/vistaCatalogo.java
+src/Home/Sidebar.java
+src/Home/vistaHome.java
+src/Main/mainLibSys.java
+src/Perfil/vistaPerfil.java
