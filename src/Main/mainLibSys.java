@@ -1,12 +1,12 @@
 package Main;
-
-import Home.*;
-
+import Login.*; 
 public class mainLibSys {
 
     public static void main(String[] args) {
-        Sidebar vMainHome = new Sidebar();
-        vMainHome.setVisible(true);
+        ModeloLogin modelo = new ModeloLogin();
+        VistaLogin vista = new VistaLogin();
+        new ControladorLogin(modelo, vista);
+        vista.setVisible(true);
     }
     
 }

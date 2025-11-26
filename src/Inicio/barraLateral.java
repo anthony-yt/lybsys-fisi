@@ -1,14 +1,14 @@
 
-package Home;
+package Inicio;
 
 import javax.swing.*;
 import java.awt.*;
 import Catalogo.*;
 import Perfil.*;
 
-public class Sidebar extends JFrame {
+public class barraLateral extends JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Sidebar.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(barraLateral.class.getName());
     
     private JButton btnCatalogo;
     private JButton btnInicio;
@@ -17,11 +17,11 @@ public class Sidebar extends JFrame {
     private JPanel panelBarraLateral;
     private JLayeredPane panelEnCapas;
 
-    vistaHome vistaInicio = new vistaHome();
+    vistaInicio vistaInicio = new vistaInicio();
     vistaCatalogo vistaCatalogo = new vistaCatalogo();
     vistaPerfil vistaPerfil = new vistaPerfil();
     
-    public Sidebar() {
+    public barraLateral() {
         initComponents();
         panelEnCapas.add(vistaInicio);
         panelEnCapas.add(vistaCatalogo);
@@ -151,7 +151,7 @@ public class Sidebar extends JFrame {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        EventQueue.invokeLater(() -> new Sidebar().setVisible(true));
+        EventQueue.invokeLater(() -> new barraLateral().setVisible(true));
     }
            
 }

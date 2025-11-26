@@ -1,10 +1,10 @@
 
-package Home;
+package Inicio;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class vistaHome extends JPanel {
+public class vistaInicio extends JPanel {
 
     private JButton btnBuscar;
     private JButton btnCerrarSesion;
@@ -15,7 +15,7 @@ public class vistaHome extends JPanel {
     private JPanel panelBarraSuperior;
     private JTextField txtBarraBusqueda;  
 
-    public vistaHome() {
+    public vistaInicio() {
         initComponents();
     }
                 
