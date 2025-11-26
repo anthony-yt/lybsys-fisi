@@ -6,8 +6,7 @@ import recursos.PlaceHolder;
  * Representa la interfaz gráfica utilizada durante el proceso
  * de registro de nuevos usuarios dentro del sistema.
  *
- * <p>Esta clase forma parte del patrón MVC actuando como la "Vista".
- * Su responsabilidad principal es mostrar los campos de entrada,
+ * <p> Su responsabilidad principal es mostrar los campos de entrada,
  * proveer getters para que el controlador acceda a ellos y notificar
  * eventos al controlador mediante listeners.</p>
  *
@@ -24,7 +23,7 @@ public class VistaRegistro extends javax.swing.JFrame {
     
     /**
      * Permite establecer el controlador que manejará los eventos
-     * de esta vista siguiendo el patrón MVC.
+     * de esta vista.
      *
      * @param controlador instancia del controlador correspondiente.
      */
@@ -37,7 +36,7 @@ public class VistaRegistro extends javax.swing.JFrame {
      *
      * <p>Realiza las siguientes acciones:</p>
      * <ul>
-     *   <li>Inicializa los componentes generados por NetBeans.</li>
+     *   <li>Inicializa los componentes generados.</li>
      *   <li>Centra la ventana en la pantalla.</li>
      *   <li>Configura los PlaceHolder para cada campo de entrada.</li>
      * </ul>

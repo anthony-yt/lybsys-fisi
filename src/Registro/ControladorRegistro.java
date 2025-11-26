@@ -11,7 +11,7 @@ import javax.swing.event.CaretListener;
  * {@link ModeloRegistro} y {@link VistaRegistro}. 
  * 
  * <p>Coordina eventos de la interfaz y ejecuta validaciones del modelo,
- * permitiendo un flujo MVC correcto y ordenado.</p>
+ * permitiendo un flujo correcto y ordenado.</p>
  * 
  * <p>Responsabilidades del controlador:</p>
  * <ul>
