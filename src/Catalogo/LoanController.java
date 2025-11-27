@@ -10,12 +10,16 @@ public class LoanController {
     private static LoanController instance;
     private Map<String, List<String>> userLoans = new HashMap<>(); // userId -> list of bookIds
     private Map<String, Integer> loanQueue = new HashMap<>(); // bookId -> user count in queue
-    private String currentUserId = "user1"; // Simulación de usuario actual
+    private String idUsuarioActual = "user1"; // Simulación de usuario actual
+    private Map<String, List<String>> completedLoans = new HashMap<>(); // historial: userId -> list of bookIds prestados completados
 
     private LoanController() {
         // Datos iniciales simulados
         userLoans.put("user1", new ArrayList<>(Arrays.asList("1", "2")));
         userLoans.put("user2", new ArrayList<>(Arrays.asList("4", "5")));
+        // historial de préstamos completados (simulación)
+        completedLoans.put("user1", new ArrayList<>(List.of("3","4")));
+        completedLoans.put("user2", new ArrayList<>(List.of("1","2")));
     }
 
     /**
@@ -34,7 +38,15 @@ public class LoanController {
      * @param userId identificador de usuario
      */
     public void establecerUsuarioActual(String userId) {
-        this.currentUserId = userId;
+        this.idUsuarioActual = userId;
+    }
+
+    /**
+     * Obtiene el identificador del usuario actualmente autenticado (simulado).
+     * @return id del usuario actual
+     */
+    public String obtenerIdUsuarioActual() {
+        return idUsuarioActual;
     }
 
     /**
@@ -42,7 +54,7 @@ public class LoanController {
      * @return lista de IDs de libros
      */
     public List<String> obtenerPrestamosUsuarioActual() {
-        return userLoans.getOrDefault(currentUserId, new ArrayList<>());
+        return userLoans.getOrDefault(idUsuarioActual, new ArrayList<>());
     }
 
     /**
@@ -69,13 +81,27 @@ public class LoanController {
         if (book.isPresent() && book.get().getAvailableCopies() > 0) {
             book.get().setAvailableCopies(book.get().getAvailableCopies() - 1);
 
-            userLoans.putIfAbsent(currentUserId, new ArrayList<>());
-            userLoans.get(currentUserId).add(bookId);
+            userLoans.putIfAbsent(idUsuarioActual, new ArrayList<>());
+            userLoans.get(idUsuarioActual).add(bookId);
 
             loanQueue.remove(bookId); // Remover de la cola si estaba
             return true;
         }
         return false;
+    }
+
+    /**
+     * Verifica si el usuario actual ha completado el préstamo del libro anteriormente (historial)
+     */
+    /**
+     * Determina si el usuario actual ha completado previamente el préstamo del libro indicado,
+     * según el historial simulado `completedLoans`.
+     * @param bookId id del libro
+     * @return true si hay un registro de préstamo completado, false en caso contrario
+     */
+    public boolean usuarioHaCompletadoPrestamo(String bookId) {
+        List<String> historial = completedLoans.getOrDefault(idUsuarioActual, new ArrayList<>());
+        return historial.contains(bookId);
     }
 
     /**
@@ -92,7 +118,7 @@ public class LoanController {
         Optional<Book> book = catalogController.getById(bookId);
         if (book.isPresent()) {
             book.get().setAvailableCopies(book.get().getAvailableCopies() + 1);
-            userLoans.get(currentUserId).remove(bookId);
+            userLoans.get(idUsuarioActual).remove(bookId);
             return true;
         }
         return false;

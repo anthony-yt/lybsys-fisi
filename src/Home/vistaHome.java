@@ -1,8 +1,14 @@
 
 package Home;
 
+/**
+ * Panel principal de bienvenida/home con barra de búsqueda global y acceso rápido.
+ */
 public class vistaHome extends javax.swing.JPanel {
 
+    /**
+     * Constructor. Inicializa componentes y configura el panel.
+     */
     public vistaHome() {
         initComponents();
     }

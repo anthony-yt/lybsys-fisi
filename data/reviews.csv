@@ -1,0 +1,6 @@
+id,bookId,userId,rating,text,date
+1,"1","Chichobelo",4,"Interesante lectura.","2025-11-26"
+2,"2","Diego Roldán",3,"Aceptable, pero esperaba más.","2025-11-26"
+3,"2","user1",5,"Me agradó bastante el libro","2025-11-26"
+5,"12","user1",4,"tremendo mierdon","2025-11-26"
+6,"1","user1",5,"Me gustó mucho este libro!","2025-11-26"

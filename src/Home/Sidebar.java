@@ -2,8 +2,12 @@
 package Home;
 
 import Catalogo.*;
-import Perfil.*;
+import perfil.*;
 
+/**
+ * Ventana principal con la barra lateral que permite cambiar entre vistas (Home, Catálogo, Perfil).
+ * Implementa botones para seleccionar la vista activa y contiene el contenedor `layerpane`.
+ */
 public class Sidebar extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Sidebar.class.getName());
@@ -12,6 +16,9 @@ public class Sidebar extends javax.swing.JFrame {
     vistaCatalogo vCatalog = new vistaCatalogo();
     vistaPerfil vPerfil = new vistaPerfil();
     
+    /**
+     * Constructor. Inicializa componentes y añade vistas al panel en capas.
+     */
     public Sidebar() {
         initComponents();
         layerpane.add(vHome);
@@ -22,6 +29,9 @@ public class Sidebar extends javax.swing.JFrame {
         vPerfil.setVisible(false);
     }
                   
+    /**
+     * Generado por NetBeans: crea e inicializa componentes Swing y layout.
+     */
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -111,24 +121,37 @@ public class Sidebar extends javax.swing.JFrame {
         pack();
     }                      
 
-    private void btnhomeActionPerformed(java.awt.event.ActionEvent evt) {                                        
+    /**
+     * Muestra la vista Home y oculta las demás vistas.
+     */
+    private void btnhomeActionPerformed(java.awt.event.ActionEvent evt) {
         vHome.setVisible(true);
         vCatalog.setVisible(false);
         vPerfil.setVisible(false);
     }                                       
 
-    private void btncatalogActionPerformed(java.awt.event.ActionEvent evt) {                                           
+    /**
+     * Muestra la vista Catálogo y oculta las demás vistas.
+     */
+    private void btncatalogActionPerformed(java.awt.event.ActionEvent evt) {
         vHome.setVisible(false);
         vCatalog.setVisible(true);
         vPerfil.setVisible(false);
     }                                          
 
-    private void btnperfilActionPerformed(java.awt.event.ActionEvent evt) {                                          
+    /**
+     * Muestra la vista Perfil y oculta las demás vistas.
+     */
+    private void btnperfilActionPerformed(java.awt.event.ActionEvent evt) {
         vHome.setVisible(false);
         vCatalog.setVisible(false);
         vPerfil.setVisible(true);
     }                                         
 
+    /**
+     * Punto de entrada principal para iniciar la aplicación (útil para pruebas rápidas).
+     * @param args argumentos de línea de comandos (no usados)
+     */
     public static void main(String args[]) {
 
         try {

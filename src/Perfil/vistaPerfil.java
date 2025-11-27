@@ -1,4 +1,4 @@
-package Perfil;
+package perfil;
 
 public class vistaPerfil extends javax.swing.JPanel {
 

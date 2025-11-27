@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * Vista principal del catálogo que muestra filtros de búsqueda, resultados y un mecanismo
+ * para abrir la vista detallada de un libro.
+ */
 public class vistaCatalogo extends JPanel {
 
     private JTextField txtTitulo;
@@ -14,6 +18,9 @@ public class vistaCatalogo extends JPanel {
 
     private CatalogController catalogController;
 
+    /**
+     * Inicializa la vista de catálogo con el controlador real y carga los libros iniciales.
+     */
     public vistaCatalogo() {
         catalogController = new CatalogController(); // usamos el controlador real
         initComponents();
@@ -21,6 +28,9 @@ public class vistaCatalogo extends JPanel {
         mostrarLibros(catalogController.getAllBooks());
     }
 
+    /**
+     * Crea e inicializa los componentes Swing (filtros, resultados, scroll) y eventos.
+     */
     private void initComponents() {
         setBackground(new Color(245, 247, 250));
         setLayout(new BorderLayout(10, 10));
@@ -63,6 +73,10 @@ public class vistaCatalogo extends JPanel {
         btnBuscar.addActionListener(e -> buscarLibros());
     }
 
+    /**
+     * Lee los filtros del formulario y utiliza el controlador para obtener libros filtrados,
+     * actualizando la vista de resultados.
+     */
     private void buscarLibros() {
         String tituloFiltro = txtTitulo.getText();
         String categoriaFiltro = cbCategoria.getSelectedItem().toString();
@@ -78,6 +92,10 @@ public class vistaCatalogo extends JPanel {
         mostrarLibros(resultados);
     }
 
+    /**
+     * Renderiza las tarjetas de libro en el panel de resultados.
+     * @param lista libros a mostrar en la cuadrícula
+     */
     private void mostrarLibros(List<Book> lista) {
         panelResultados.removeAll();
 
@@ -122,6 +140,10 @@ public class vistaCatalogo extends JPanel {
         panelResultados.repaint();
     }
 
+    /**
+     * Abre una ventana emergente con la vista `BookDetailView` para el libro seleccionado.
+     * @param libro Libro a mostrar en detalle
+     */
     private void abrirDetalleLibro(Book libro) {
         JFrame frameDetalle = new JFrame("Detalle del Libro: " + libro.getTitle());
         frameDetalle.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
