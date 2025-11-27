@@ -28,116 +28,128 @@ public class CatalogController {
         allBooks.add(new Book("1", "Introducción a Java", "Joshua Bloch, Guy Steele",
                 "Programación", "978-0596009205",
                 "Una introducción comprensiva a Java que cubre desde conceptos básicos hasta avanzados.",
-                null, 5, 5, "E-book"));
+                "src/imagenes/IntroducciónAJava.png", 5, 5, "E-book"));
 
         allBooks.add(new Book("2", "Fundamentos de Bases de Datos", "Ramez Elmasri, Shamkant B. Navathe",
                 "Bases de Datos", "978-0136086208",
                 "Cobertura completa de conceptos de bases de datos relacionales y diseño de esquemas.",
-                null, 4, 4, "Físico"));
+                "src/imagenes/FundamentosDeBasesDeDatos.png", 4, 4, "Físico"));
 
         allBooks.add(new Book("3", "Redes de Computadoras", "Andrew S. Tanenbaum",
                 "Redes", "978-0130661029",
                 "Análisis detallado de protocolos, arquitecturas y tecnologías de red.",
-                null, 3, 1, "Físico"));
+                "src/imagenes/RedesDeComputadoras.png", 3, 1, "Físico"));
 
         allBooks.add(new Book("4", "Sistemas Operativos Modernos", "Andrew S. Tanenbaum, Herbert Bos",
                 "Sistemas", "978-0136006633",
                 "Estudio en profundidad de sistemas operativos contemporáneos.",
-                null, 4, 3, "Físico"));
+                "src/imagenes/SistemasOperativosModernos.png", 4, 3, "Físico"));
 
         allBooks.add(new Book("5", "Estructuras de Datos y Algoritmos", "Thomas H. Cormen",
                 "Algoritmos", "978-0262033848",
                 "La referencia definitiva para algoritmos y estructuras de datos.",
-                null, 6, 5, "E-book"));
+                "src/imagenes/EstructurasDeDatosyAlgoritmos.png", 6, 5, "E-book"));
 
         allBooks.add(new Book("6", "Inteligencia Artificial: Un Enfoque Moderno", "Stuart Russell, Peter Norvig",
                 "Inteligencia Artificial", "978-0136042594",
                 "Cobertura integral de técnicas y aplicaciones de IA modernas.",
-                null, 3, 3, "PDF"));
+                "src/imagenes/InteligenciaArtificial.png", 3, 3, "PDF"));
 
         allBooks.add(new Book("7", "Aprendizaje Automático", "Aurélien Géron",
                 "Inteligencia Artificial", "978-0278962282",
                 "Guía práctica para machine learning con ejemplos y código.",
-                null, 3, 0, "E-book"));
+                "src/imagenes/AprendizajeAutomático.png", 3, 0, "E-book"));
 
         allBooks.add(new Book("8", "Ingeniería de Software", "Ian Sommerville",
                 "Sistemas", "978-0137035151",
                 "Principios y prácticas modernas en desarrollo de software.",
-                null, 4, 4, "Físico"));
+                "src/imagenes/IngenieriaDeSoftware.png", 4, 4, "Físico"));
 
         allBooks.add(new Book("9", "Diseño y Análisis de Algoritmos", "Sanjoy Dasgupta, Christos Papadimitriou, Umesh Vazirani",
                 "Algoritmos", "978-0073523408",
                 "Métodos para diseñar algoritmos eficientes con análisis matemático.",
-                null, 3, 2, "Físico"));
+                "src/imagenes/DiseñoyAnalisisDeAlgoritmos.png", 3, 2, "Físico"));
 
         allBooks.add(new Book("10", "Bases de Datos Distribuidas", "Ceri Stefano, Giuseppe Pelagatti",
                 "Bases de Datos", "978-0201593204",
                 "Conceptos y técnicas para sistemas de bases de datos distribuidas.",
-                null, 3, 2, "Físico"));
+                "src/imagenes/BasesDeDatosDistribuidas.png", 3, 2, "Físico"));
 
         allBooks.add(new Book("11", "Programación en C++", "Bjarne Stroustrup",
                 "Programación", "978-0321563842",
                 "Referencia completa del lenguaje C++ por su creador.",
-                null, 4, 0, "E-book"));
+                "src/imagenes/ProgramacionEnC++.png", 4, 0, "E-book"));
 
         allBooks.add(new Book("12", "Minería de Datos", "Ian Witten, Eibe Frank, Mark Hall",
                 "Inteligencia Artificial", "978-0128042915",
                 "Técnicas y herramientas para extraer patrones de grandes volúmenes de datos.",
-                null, 3, 3, "Físico"));
+                "src/imagenes/MineriaDeDatos.png", 3, 3, "Físico"));
 
         allBooks.add(new Book("13", "Administración de Redes", "Craig Hunt",
                 "Redes", "978-1491950357",
                 "Guía práctica para administración y configuración de redes.",
-                null, 4, 3, "E-book"));
+                "src/imagenes/AdministracionDeRedes.png", 4, 3, "E-book"));
 
         // Entradas adicionales para pruebas (mismo autor en varios libros)
         allBooks.add(new Book("14", "Redes: Teoría y Práctica", "Andrew S. Tanenbaum",
                 "Redes", "978-1111111111",
-                "Material adicional sobre diseño de redes y protocolos.", null, 2, 2, "Físico"));
+                "Material adicional sobre diseño de redes y protocolos.", "src/imagenes/RedesTeoriayPractica.png",
+                2, 2, "Físico"));
 
         allBooks.add(new Book("15", "Sistemas Operativos: Casos Prácticos", "Andrew S. Tanenbaum",
                 "Sistemas", "978-2222222222",
-                "Casos prácticos y ejercicios sobre sistemas operativos.", null, 2, 1, "E-book"));
+                "Casos prácticos y ejercicios sobre sistemas operativos.", "src/imagenes/SistemasOperativosCasosPracticos.png",
+                2, 1, "E-book"));
 
         allBooks.add(new Book("16", "Java Avanzado", "Joshua Bloch",
                 "Programación", "978-3333333333",
-                "Buenas prácticas y patrones avanzados en Java.", null, 3, 3, "PDF"));
+                "Buenas prácticas y patrones avanzados en Java.", "src/imagenes/JavaAvanzado.png", 
+                3, 3, "PDF"));
 
         allBooks.add(new Book("17", "Patrones de Diseño en Java", "Joshua Bloch",
                 "Programación", "978-4444444444",
-                "Implementación de patrones de diseño en Java con ejemplos.", null, 2, 2, "E-book"));
+                "Implementación de patrones de diseño en Java con ejemplos.", "src/imagenes/PatronesDeDiseñoEnJava.png", 
+                2, 2, "E-book"));
 
         allBooks.add(new Book("18", "Machine Learning con Python", "Aurélien Géron",
                 "Inteligencia Artificial", "978-5555555555",
-                "Ejemplos prácticos de machine learning con scikit-learn y TensorFlow.", null, 4, 2, "E-book"));
+                "Ejemplos prácticos de machine learning con scikit-learn y TensorFlow.", "src/imagenes/MachineLearningConPython.png", 
+                4, 2, "E-book"));
 
         allBooks.add(new Book("19", "Introducción a la Seguridad Informática", "Ian Sommerville",
                 "Sistemas", "978-6666666666",
-                "Conceptos básicos y medidas de seguridad en sistemas.", null, 3, 3, "Físico"));
+                "Conceptos básicos y medidas de seguridad en sistemas.", "src/imagenes/IntroduccionALaSeguridadInformatica.png", 
+                3, 3, "Físico"));
 
         allBooks.add(new Book("20", "Algoritmos para Big Data", "Sanjoy Dasgupta",
                 "Algoritmos", "978-7777777777",
-                "Estrategias y algoritmos para procesamiento de grandes volúmenes de datos.", null, 3, 2, "E-book"));
+                "Estrategias y algoritmos para procesamiento de grandes volúmenes de datos.", "src/imagenes/AlgoritmosParaBigData.png", 
+                3, 2, "E-book"));
 
         allBooks.add(new Book("21", "Bases de Datos NoSQL", "Ramez Elmasri",
                 "Bases de Datos", "978-8888888888",
-                "Modelos y uso de bases de datos NoSQL modernas.", null, 2, 2, "PDF"));
+                "Modelos y uso de bases de datos NoSQL modernas.", "src/imagenes/BasesDeDatosNoSQL.png", 
+                2, 2, "PDF"));
 
         allBooks.add(new Book("22", "Arquitectura de Software", "Ian Sommerville",
                 "Sistemas", "978-9999999999",
-                "Principios de arquitectura y diseño de software a gran escala.", null, 3, 1, "Físico"));
+                "Principios de arquitectura y diseño de software a gran escala.", "src/imagenes/ArquitecturaDeSoftware.png", 
+                3, 1, "Físico"));
 
         allBooks.add(new Book("23", "Estructuras Avanzadas de Datos", "Thomas H. Cormen",
                 "Algoritmos", "978-1212121212",
-                "Temas avanzados en estructuras de datos y su análisis.", null, 2, 2, "E-book"));
+                "Temas avanzados en estructuras de datos y su análisis.", "src/imagenes/EstructurasAvanzadasDeDatos.png", 
+                2, 2, "E-book"));
 
         allBooks.add(new Book("24", "Procesamiento de Lenguaje Natural", "Ian Witten",
                 "Inteligencia Artificial", "978-1313131313",
-                "Técnicas y aplicaciones de PLN en la práctica.", null, 2, 2, "Físico"));
+                "Técnicas y aplicaciones de PLN en la práctica.", "src/imagenes/ProcesamientoDeLenguajeNatural.png", 
+                2, 2, "Físico"));
 
         allBooks.add(new Book("25", "Redes Inalámbricas y Movilidad", "Craig Hunt",
                 "Redes", "978-1414141414",
-                "Diseño y gestión de redes inalámbricas y móviles.", null, 3, 3, "Físico"));
+                "Diseño y gestión de redes inalámbricas y móviles.", "src/imagenes/RedesInalambricasyMovilidad.png", 
+                3, 3, "Físico"));
     }
 
         /**

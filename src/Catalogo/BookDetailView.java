@@ -4,20 +4,35 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import Resena.VistaResenas;
 import java.awt.*;
+import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
 
 /**
  * Vista de detalle de un libro.
- * Muestra portada, metadatos, estado de copias y acciones relacionadas.
+ * <p>
+ * Muestra la portada, metadatos (título, autor/es, categoría, ISBN, descripción, formato),
+ * y acciones relacionadas como solicitar un préstamo o leer el libro si el usuario ya lo posee.
+ * Además, integra la vista de reseñas (`Resena.VistaResenas`) en la parte inferior.
+ * </p>
  */
 public class BookDetailView extends JPanel {
+    /** Modelo del libro que se está mostrando en la vista. */
     private Book book;
+    /** Controlador del catálogo para consultar y actualizar metadatos del libro. */
     private CatalogController catalogController;
+    /** Controlador de préstamos que gestiona el estado del libro para el usuario actual. */
     private LoanController loanController;
+    /** Botón principal que contiene la acción contextual (pedir préstamo / leer / en cola). */
     private JButton btnAccion;
+    /** Botón con el nombre del autor (actúa como filtro para buscar otros libros del autor). */
     private JButton btnAuthor;
 
+    /**
+     * Constructor.
+     * @param book libro a mostrar en detalle
+     * @param catalogController controlador de catálogo usado para consultar y actualizar datos
+     */
     public BookDetailView(Book book, CatalogController catalogController) {
         this.book = book;
         this.catalogController = catalogController;
@@ -30,61 +45,107 @@ public class BookDetailView extends JPanel {
         initComponents();
     }
 
+    /**
+     * Inicializa los componentes Swing principales y organiza la estructura visual.
+     * - Panel izquierdo: portada del libro.
+     * - Panel derecho: metadatos y acciones.
+     */
     private void initComponents() {
-        // Panel izquierdo: Portada
         JPanel leftPanel = crearPanelIzquierdo();
         add(leftPanel, BorderLayout.WEST);
         
-        // Panel derecho: Metadatos y acciones
         JPanel rightPanel = crearPanelDerecho();
         add(rightPanel, BorderLayout.CENTER);
     }
 
     /**
-     * Crea el panel izquierdo con la portada del libro.
-     * @return panel con la portada (JPanel)
+     * Crea el panel izquierdo que contiene la portada del libro. Si no hay portada,
+     * se muestra un texto alternativo "Sin portada".
+     * @return panel con la portada del libro
      */
     private JPanel crearPanelIzquierdo() {
-        JPanel panel = new JPanel(new BorderLayout());
+        final String coverPath = book.getCoverPath();
+
+        JPanel panel = new JPanel() {
+            private Image image = null;
+            private boolean imageLoaded = false;
+
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                if (!imageLoaded) {
+                    if (coverPath != null && !coverPath.isEmpty()) {
+                         File f = new File(coverPath);
+                         if (f.exists()) {
+                             image = new ImageIcon(coverPath).getImage();
+                         }
+                    }
+                    imageLoaded = true;
+                }
+
+                int panelWidth = getWidth();
+                int panelHeight = getHeight();
+
+                if (image != null) {
+                    int imgWidth = image.getWidth(null);
+                    int imgHeight = image.getHeight(null);
+
+                    double widthRatio = (double) panelWidth / imgWidth;
+                    double heightRatio = (double) panelHeight / imgHeight;
+                    
+                    double scale = Math.min(widthRatio, heightRatio);
+
+                    int newWidth = (int) (imgWidth * scale);
+                    int newHeight = (int) (imgHeight * scale);
+
+                    int x = (panelWidth - newWidth) / 2;
+                    int y = (panelHeight - newHeight) / 2;
+
+                    g2d.drawImage(image, x, y, newWidth, newHeight, this);
+
+                } else {
+                    g2d.setColor(Color.GRAY);
+                    g2d.setFont(new Font("Arial", Font.PLAIN, 14));
+                    FontMetrics fm = g2d.getFontMetrics();
+                    String text = "Sin portada";
+                    int textWidth = fm.stringWidth(text);
+                    int textHeight = fm.getAscent();
+                    g2d.drawString(text, (panelWidth - textWidth) / 2, (panelHeight + textHeight) / 2);
+                }
+            }
+        };
+
         panel.setBackground(Color.WHITE);
-        panel.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
+        panel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(200, 200, 200)),
+                new EmptyBorder(10, 10, 10, 10)
+        ));
         panel.setPreferredSize(new Dimension(250, 400));
-
-        JLabel lblPortada = new JLabel();
-        if (book.getCoverPath() != null) {
-            ImageIcon icon = new ImageIcon(book.getCoverPath());
-            Image img = icon.getImage().getScaledInstance(220, 350, Image.SCALE_SMOOTH);
-            lblPortada.setIcon(new ImageIcon(img));
-        } else {
-            lblPortada.setText("Sin portada");
-            lblPortada.setHorizontalAlignment(SwingConstants.CENTER);
-            lblPortada.setFont(new Font("Arial", Font.PLAIN, 14));
-            lblPortada.setForeground(Color.GRAY);
-        }
-        lblPortada.setHorizontalAlignment(SwingConstants.CENTER);
-
-        panel.add(lblPortada, BorderLayout.CENTER);
         return panel;
     }
 
     /**
-     * Crea el panel derecho con metadatos del libro (título, autor, categoría, ISBN, descripción, formato)
-     * y acciones relacionadas (botón de pedir préstamo, etc.).
-     * @return panel derecho con los metadatos y acciones
+     * Crea el panel derecho con todos los metadatos visibles del libro y las acciones
+     * (botón de acción, filtros por autor, etc.).
+     * @return panel con los metadatos y acciones
      */
     private JPanel crearPanelDerecho() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(new Color(245, 247, 250));
 
-        // --- Título ---
         JLabel lblTitle = new JLabel(book.getTitle());
         lblTitle.setFont(new Font("Arial", Font.BOLD, 24));
         lblTitle.setAlignmentX(Component.LEFT_ALIGNMENT); 
         panel.add(lblTitle);
         panel.add(Box.createVerticalStrut(10));
 
-        // --- Autor ---
         JPanel authorPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); 
         authorPanel.setBackground(new Color(245, 247, 250));
         authorPanel.setAlignmentX(Component.LEFT_ALIGNMENT); 
@@ -107,7 +168,6 @@ public class BookDetailView extends JPanel {
         panel.add(authorPanel);
         panel.add(Box.createVerticalStrut(5));
 
-        // --- Categoría ---
         JPanel categoryPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         categoryPanel.setBackground(new Color(245, 247, 250));
         categoryPanel.setAlignmentX(Component.LEFT_ALIGNMENT); 
@@ -122,7 +182,6 @@ public class BookDetailView extends JPanel {
         panel.add(categoryPanel);
         panel.add(Box.createVerticalStrut(5));
 
-        // --- ISBN ---
         JPanel isbnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         isbnPanel.setBackground(new Color(245, 247, 250));
         isbnPanel.setAlignmentX(Component.LEFT_ALIGNMENT); 
@@ -137,7 +196,6 @@ public class BookDetailView extends JPanel {
         panel.add(isbnPanel);
         panel.add(Box.createVerticalStrut(15));
 
-        // --- Descripción ---
         JLabel lblDescLabel = new JLabel("Descripción:");
         lblDescLabel.setFont(new Font("Arial", Font.BOLD, 12));
         lblDescLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -159,7 +217,6 @@ public class BookDetailView extends JPanel {
         panel.add(scrollDesc);
         panel.add(Box.createVerticalStrut(15));
 
-        // --- Formato (Chips) ---
         JPanel formatPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 5));
         formatPanel.setBackground(new Color(245, 247, 250));
         formatPanel.setAlignmentX(Component.LEFT_ALIGNMENT); 
@@ -174,7 +231,6 @@ public class BookDetailView extends JPanel {
         panel.add(formatPanel);
         panel.add(Box.createVerticalStrut(20));
 
-        // --- Copias y Botón de Acción ---
         JPanel copiesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         copiesPanel.setBackground(new Color(245, 247, 250));
         copiesPanel.setAlignmentX(Component.LEFT_ALIGNMENT); 
@@ -189,58 +245,47 @@ public class BookDetailView extends JPanel {
         copiesPanel.add(lblCopiesLabel);
         copiesPanel.add(lblCopies);
         
-        // Espacio entre el texto de copias y el botón
         copiesPanel.add(Box.createHorizontalStrut(20));
 
-        // Botón de acción 
         btnAccion = crearBotonAccion();
-        // Ajustamos tamaño preferido un poco más ancho para las mayúsculas
-        btnAccion.setPreferredSize(new Dimension(190, 35)); 
+        btnAccion.setPreferredSize(new Dimension(200, 35)); 
         copiesPanel.add(btnAccion);
 
         panel.add(copiesPanel);
-
-        // Relleno final
         panel.add(Box.createVerticalGlue());
         
         return panel;
     }
 
     /**
-     * MODIFICADO: Botones en mayúsculas, sin emojis, texto blanco y centrado.
-     */
-    /**
-     * Construye el botón principal de acción cuyo texto/estado depende del estado del libro y del usuario.
-     * El botón puede ser: "Pedir préstamo" (disponible), "En cola" o "Sin copias".
-     * @return botón configurado con listeners apropiados
+     * Construye el botón principal de acción cuyo texto y comportamiento depende del estado
+     * del libro para el usuario actual. Estados posibles: YA_TIENE, DISPONIBLE, EN_COLA, SIN_COPIAS.
+     * @return el JButton con el comportamiento apropiado
      */
     private JButton crearBotonAccion() {
         JButton btn = new JButton();
         LoanController.EstadoLibro status = loanController.obtenerEstadoLibro(book.getId(), catalogController);
         
-        // Usamos negrita y un tamaño ligeramente mayor para que las mayúsculas se vean bien
         btn.setFont(new Font("Arial", Font.BOLD, 13)); 
         btn.setFocusPainted(false);
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btn.setOpaque(true);
         btn.setBorderPainted(false);
         
-        // Aseguramos el centrado horizontal y vertical
         btn.setHorizontalAlignment(SwingConstants.CENTER);
         btn.setVerticalAlignment(SwingConstants.CENTER);
         btn.setForeground(Color.WHITE);
 
         switch (status) {
             case YA_TIENE:
-                // Mayúsculas, sin emoji
                 btn.setText("LEER LIBRO"); 
                 btn.setBackground(new Color(76, 175, 80));
-                btn.setEnabled(false); 
-                btn.setToolTipText("Ya tienes este libro. Ve a tu perfil.");
+                btn.setEnabled(true); 
+                btn.addActionListener(e -> loanController.abrirLibro(book.getId()));
+                btn.setToolTipText("Ya tienes este libro. Haz clic para leer.");
                 break;
                 
             case DISPONIBLE:
-                 // Mayúsculas, sin emoji
                 btn.setText("PEDIR PRÉSTAMO");
                 btn.setBackground(new Color(33, 150, 243));
                 btn.setEnabled(true);
@@ -248,16 +293,17 @@ public class BookDetailView extends JPanel {
                 break;
                 
             case EN_COLA:
-                 // Mayúsculas, sin emoji
                 btn.setText("EN COLA");
                 btn.setBackground(new Color(255, 152, 0));
-                btn.setEnabled(false);
+                btn.setEnabled(true);
+                btn.setFocusable(false);
+                btn.setRolloverEnabled(false);
+                
                 int queuePos = loanController.obtenerPosicionCola(book.getId());
                 btn.setToolTipText("Posición en cola: " + queuePos);
                 break;
                 
             case SIN_COPIAS:
-                 // Mayúsculas, sin emoji
                 btn.setText("SIN COPIAS");
                 btn.setBackground(new Color(244, 67, 54));
                 btn.setEnabled(true); 
@@ -273,6 +319,13 @@ public class BookDetailView extends JPanel {
         return btn;
     }
 
+    /**
+     * Crea un "chip" visual (etiqueta con fondo coloreado) usado para mostrar el formato
+     * del libro (por ejemplo, "PDF", "Físico", "E-book").
+     * @param text texto del chip
+     * @param bgColor color de fondo del chip
+     * @return JLabel estilizado como chip
+     */
     private JLabel crearChip(String text, Color bgColor) {
         JLabel chip = new JLabel(text);
         chip.setFont(new Font("Arial", Font.PLAIN, 11));
@@ -288,8 +341,9 @@ public class BookDetailView extends JPanel {
     }
 
     /**
-     * Maneja la acción al clicar el botón principal. Si el usuario ya tiene el libro, lo abre.
-     * Si el libro está disponible, se solicita el préstamo invocando a `LoanController.pedirPrestamo`.
+     * Maneja la acción cuando el usuario pulsa el botón principal. Si el usuario ya tiene
+     * el libro (estado YA_TIENE) se invoca la apertura del lector; si el libro está
+     * disponible se solicita el préstamo, actualizando la UI en caso de éxito.
      */
     private void pedirOAbrirLibro() {
         LoanController.EstadoLibro status = loanController.obtenerEstadoLibro(book.getId(), catalogController);
@@ -300,10 +354,9 @@ public class BookDetailView extends JPanel {
         } else if (status == LoanController.EstadoLibro.DISPONIBLE) {
             if (loanController.pedirPrestamo(book.getId(), catalogController)) {
                 JOptionPane.showMessageDialog(this, "Préstamo realizado exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                // Actualizar vista completa
                 removeAll();
                 initComponents();
-                addNotify(); // Para recargar reseñas
+                addNotify();
                 revalidate();
                 repaint();
             } else {
@@ -313,8 +366,9 @@ public class BookDetailView extends JPanel {
     }
 
     /**
-     * Muestra una ventana con los demás libros del autor y permite abrir detalles.
-     * @param autor nombre del autor a filtrar
+     * Muestra una ventana que lista otros libros del autor indicado y permite abrir
+     * el detalle de cada uno. Filtra para exluir el libro actual de la lista.
+     * @param autor nombre del autor que se usará para buscar
      */
     private void aplicarFiltroAutor(String autor) {
         List<Book> encontrados = catalogController.getByAuthor(autor);
@@ -368,6 +422,11 @@ public class BookDetailView extends JPanel {
     }
 
     @Override
+    /**
+     * Hook de Swing ejecutado cuando el componente se agrega a un contenedor visible.
+     * Añade la vista de reseñas en la parte inferior (o la recarga si ya existe)
+     * para mostrar la lista de reseñas y el formulario de envío/edición si procede.
+     */
     public void addNotify() {
         super.addNotify();
         SwingUtilities.invokeLater(() -> {
