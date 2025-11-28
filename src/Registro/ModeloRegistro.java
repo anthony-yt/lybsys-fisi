@@ -47,10 +47,12 @@ public class ModeloRegistro {
     }
 
     /**
-     * Valida si el código de estudiante cumple con la longitud mínima requerida.
+     * Valida si el código de estudiante cumple con la longitud requerida.
+     *
+     * <p>Un código institucional válido debe contener exactamente 8 caracteres.</p>
      *
      * @param codigoEstudiante código ingresado por el usuario
-     * @return {@code true} si el código tiene al menos 8 caracteres,
+     * @return {@code true} si el código tiene exactamente 8 caracteres,
      *         {@code false} en caso contrario o si es nulo
      */
     public boolean logitudCodigoEstudiante(String codigoEstudiante) {
@@ -100,15 +102,20 @@ public class ModeloRegistro {
     /**
      * Valida si la contraseña contiene al menos un carácter especial.
      *
+     * <p>Se considera carácter especial a cualquier símbolo que no sea letra
+     * ni número.</p>
+     *
      * @param contrasena contraseña a evaluar
-     * @return {@code true} si contiene caracteres especiales, {@code false} en caso contrario
+     * @return {@code true} si contiene al menos un carácter especial,
+     *         {@code false} en caso contrario
      */
     public boolean contieneCaracterEspecial(String contrasena) {
         return contrasena != null && contrasena.matches(".*[^A-Za-z0-9].*");
     }
 
     /**
-     * Verifica si la contraseña cumple con el tamaño mínimo.
+     * Verifica si la contraseña cumple con la longitud mínima requerida
+     * para considerarse segura.
      *
      * @param contrasena contraseña a evaluar
      * @return {@code true} si la longitud es mayor o igual a 8 caracteres,
@@ -124,15 +131,19 @@ public class ModeloRegistro {
 
     /**
      * Calcula el porcentaje total de cumplimiento de los requisitos de seguridad
-     * de la contraseña. Cada uno de los 4 requisitos aporta un 25% al valor total.
+     * de la contraseña. Cada uno de los cuatro requisitos aporta exactamente
+     * un 25% al valor total.
      *
      * <p>Requisitos evaluados:</p>
      * <ul>
-     *   <li>Contiene letras</li>
-     *   <li>Contiene números</li>
-     *   <li>Contiene caracteres especiales</li>
-     *   <li>Longitud mínima de 8 caracteres</li>
+     *   <li>Contiene letras.</li>
+     *   <li>Contiene números.</li>
+     *   <li>Contiene caracteres especiales.</li>
+     *   <li>Longitud mínima de 8 caracteres.</li>
      * </ul>
+     *
+     * <p>Este método no evalúa la fuerza cryptográfica de la contraseña, sólo
+     * el cumplimiento de los requisitos definidos para la interfaz de registro.</p>
      *
      * @param contrasena contraseña evaluada
      * @return un valor entero entre 0 y 100 indicando el progreso total
