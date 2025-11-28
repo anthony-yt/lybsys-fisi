@@ -36,12 +36,16 @@ public class VistaRegistro extends javax.swing.JFrame {
      *
      * <p>Realiza las siguientes acciones:</p>
      * <ul>
-     *   <li>Inicializa los componentes generados.</li>
+     *   <li>Inicializa todos los componentes generados por el diseñador.</li>
      *   <li>Centra la ventana en la pantalla.</li>
-     *   <li>Configura los PlaceHolder para cada campo de entrada.</li>
+     *   <li>Configura los {@code PlaceHolder} utilizados para guiar al usuario
+     *       en los campos de entrada.</li>
      * </ul>
      *
-     * <p>El título de la ventana se establece como "Registro".</p>
+     * <p>El título de la ventana se establece como {@code "Registro"}.</p>
+     *
+     * <p>Esta clase no maneja lógica de validación ni acciones; dichas
+     * responsabilidades corresponden al controlador asociado.</p>
      */
     public VistaRegistro() {
         super("Registro");
@@ -49,208 +53,313 @@ public class VistaRegistro extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         
         // Configuración de PlaceHolders
-        PlaceHolder usuarioPH = new PlaceHolder("Usuario", usuario);
-        PlaceHolder correoElectronicoPH = new PlaceHolder("Correo Electronico (unmsm.edu.pe)", correoElectronico);
-        PlaceHolder codigoEstudiantePH = new PlaceHolder("Codigo de Estudiante", codigoEstudiante);
-        PlaceHolder contrasenaPH = new PlaceHolder("**********", contrasena);
-        PlaceHolder confirmacionContrasenaPH = new PlaceHolder("**********", confirmacionContrasena);
+        PlaceHolder usuarioPH = new PlaceHolder("Usuario", txtUsuario);
+        PlaceHolder correoElectronicoPH = new PlaceHolder("Correo Electronico (unmsm.edu.pe)", txtCorreoElectronico);
+        PlaceHolder codigoEstudiantePH = new PlaceHolder("Codigo de Estudiante", txtCodigoEstudiante);
+        PlaceHolder contrasenaPH = new PlaceHolder("**********", txtContrasena);
+        PlaceHolder confirmacionContrasenaPH = new PlaceHolder("**********", txtConfirmacionContrasena);
     }
 
     // ───────────────────────────────────────────────────────────────
     // GETTERS
     // ───────────────────────────────────────────────────────────────
     
-    public javax.swing.JTextField getCampoUsuario() { return usuario; }
-    public javax.swing.JTextField getCampoCorreo() { return correoElectronico; }
-    public javax.swing.JTextField getCampoCodigoEstudiante() { return codigoEstudiante; }
-    public javax.swing.JPasswordField getCampoContrasena() { return contrasena; }
-    public javax.swing.JPasswordField getCampoConfirmacionContrasena() { return confirmacionContrasena; }
-    public javax.swing.JButton getBotonRegistrar() { return botonRegistrar; }
+    /**
+     * Obtiene el campo de texto del nombre de usuario.
+     *
+     * @return componente gráfico asociado al nombre de usuario
+     */
+    public javax.swing.JTextField getTxtUsuario() { return txtUsuario; }
+
+    /**
+     * Obtiene el campo de texto del correo institucional.
+     *
+     * @return componente de entrada para el correo institucional
+     */
+    public javax.swing.JTextField getTxtCorreoElectronico() { return txtCorreoElectronico; }
+
+    /**
+     * Obtiene el campo destinado al código de estudiante.
+     *
+     * @return campo de texto del código de estudiante
+     */
+    public javax.swing.JTextField getTxtCodigoEstudiante() { return txtCodigoEstudiante; }
+
+    /**
+     * Retorna el campo de ingreso de contraseña.
+     *
+     * @return componente gráfico asociado a la contraseña
+     */
+    public javax.swing.JPasswordField getTxtContrasena() { return txtContrasena; }
+
+    /**
+     * Retorna el campo donde se ingresa la confirmación de contraseña.
+     *
+     * @return campo gráfico para confirmar la contraseña
+     */
+    public javax.swing.JPasswordField getTxtConfirmacionContrasena() { return txtConfirmacionContrasena; }
+
+    /**
+     * Botón principal utilizado para iniciar el proceso de registro.
+     *
+     * @return botón "Registrarse"
+     */
+    public javax.swing.JButton getBtnRegistrar() { return btnRegistrar; }
+
+    /**
+     * Botón que permite navegar hacia la ventana de inicio de sesión.
+     *
+     * @return botón "Iniciar sesión"
+     */
+    public javax.swing.JButton getBtnIniciarSesion() { return btnIniciarSesion; }
+
+    /**
+     * Barra que representa visualmente el nivel de seguridad
+     * de la contraseña ingresada.
+     *
+     * @return barra de progreso utilizada para mostrar el nivel de seguridad
+     */
     public javax.swing.JProgressBar getBarraProgreso() { return barraProgreso; }
 
-    public javax.swing.JLabel getEtiquetaRequisitoLetra() { return requisito1; }
-    public javax.swing.JLabel getEtiquetaRequisitoEspecial() { return requisito2; }
-    public javax.swing.JLabel getEtiquetaRequisitoNumero() { return requisito3; }
-    public javax.swing.JLabel getEtiquetaRequisitoLongitud() { return requisito4; }
+    /**
+     * Etiqueta que muestra el cumplimiento del requisito
+     * "contener una letra".
+     *
+     * @return etiqueta asociada al requisito de letra
+     */
+    public javax.swing.JLabel getLblRequisitoLetra() { return lblRequisito1; }
+
+    /**
+     * Etiqueta que muestra el cumplimiento del requisito
+     * "contener un carácter especial".
+     *
+     * @return etiqueta asociada al requisito de carácter especial
+     */
+    public javax.swing.JLabel getLblRequisitoEspecial() { return lblRequisito2; }
+
+    /**
+     * Etiqueta que muestra el cumplimiento del requisito
+     * "contener un número".
+     *
+     * @return etiqueta del requisito de número
+     */
+    public javax.swing.JLabel getLblRequisitoNumero() { return lblRequisito3; }
+
+    /**
+     * Etiqueta que muestra el cumplimiento del requisito
+     * "longitud mínima de contraseña".
+     *
+     * @return etiqueta del requisito de longitud
+     */
+    public javax.swing.JLabel getLblRequisitoLongitud() { return lblRequisito4; }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-        correoElectronico = new javax.swing.JTextField();
-        codigoEstudiante = new javax.swing.JTextField();
-        contrasena = new javax.swing.JPasswordField();
-        confirmacionContrasena = new javax.swing.JPasswordField();
-        botonRegistrar = new javax.swing.JButton();
+        txtCorreoElectronico = new javax.swing.JTextField();
+        txtCodigoEstudiante = new javax.swing.JTextField();
+        txtContrasena = new javax.swing.JPasswordField();
+        txtConfirmacionContrasena = new javax.swing.JPasswordField();
+        btnRegistrar = new javax.swing.JButton();
         barraProgreso = new javax.swing.JProgressBar();
-        titulo = new javax.swing.JLabel();
-        usuario = new javax.swing.JTextField();
-        requisito1 = new javax.swing.JLabel();
-        requisito2 = new javax.swing.JLabel();
-        requisito3 = new javax.swing.JLabel();
-        requisito4 = new javax.swing.JLabel();
-        diseño = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
+        txtUsuario = new javax.swing.JTextField();
+        lblRequisito1 = new javax.swing.JLabel();
+        lblRequisito2 = new javax.swing.JLabel();
+        lblRequisito3 = new javax.swing.JLabel();
+        lblRequisito4 = new javax.swing.JLabel();
+        lblImagen = new javax.swing.JLabel();
+        btnIniciarSesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        correoElectronico.setFont(new java.awt.Font("SimSun", 1, 14)); // NOI18N
-        correoElectronico.addActionListener(new java.awt.event.ActionListener() {
+        txtCorreoElectronico.setFont(new java.awt.Font("SimSun", 1, 14)); // NOI18N
+        txtCorreoElectronico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                correoElectronicoActionPerformed(evt);
+                txtCorreoElectronicoActionPerformed(evt);
             }
         });
 
-        codigoEstudiante.setFont(new java.awt.Font("SimSun", 1, 14)); // NOI18N
-        codigoEstudiante.addActionListener(new java.awt.event.ActionListener() {
+        txtCodigoEstudiante.setFont(new java.awt.Font("SimSun", 1, 14)); // NOI18N
+        txtCodigoEstudiante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                codigoEstudianteActionPerformed(evt);
+                txtCodigoEstudianteActionPerformed(evt);
             }
         });
 
-        contrasena.setFont(new java.awt.Font("SimSun", 1, 14)); // NOI18N
-        contrasena.addActionListener(new java.awt.event.ActionListener() {
+        txtContrasena.setFont(new java.awt.Font("SimSun", 1, 14)); // NOI18N
+        txtContrasena.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                contrasenaActionPerformed(evt);
+                txtContrasenaActionPerformed(evt);
             }
         });
 
-        confirmacionContrasena.setFont(new java.awt.Font("SimSun", 1, 14)); // NOI18N
+        txtConfirmacionContrasena.setFont(new java.awt.Font("SimSun", 1, 14)); // NOI18N
 
-        botonRegistrar.setText("Registrarse");
-        botonRegistrar.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistrar.setText("Registrarse");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonRegistrarActionPerformed(evt);
+                btnRegistrarActionPerformed(evt);
             }
         });
 
-        titulo.setFont(new java.awt.Font("Segoe UI Black", 0, 32)); // NOI18N
-        titulo.setForeground(new java.awt.Color(20, 125, 255));
-        titulo.setText("LybSys FISI");
+        lblTitulo.setFont(new java.awt.Font("Segoe UI Black", 0, 32)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(20, 125, 255));
+        lblTitulo.setText("LybSys FISI");
 
-        usuario.setFont(new java.awt.Font("SimSun", 1, 14)); // NOI18N
-        usuario.addActionListener(new java.awt.event.ActionListener() {
+        txtUsuario.setFont(new java.awt.Font("SimSun", 1, 14)); // NOI18N
+        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usuarioActionPerformed(evt);
+                txtUsuarioActionPerformed(evt);
             }
         });
 
-        requisito1.setText("▶ Al menos debería tener una letra.");
-        requisito1.setPreferredSize(new java.awt.Dimension(266, 22));
+        lblRequisito1.setText("▶ Al menos debería tener una letra.");
+        lblRequisito1.setPreferredSize(new java.awt.Dimension(266, 22));
 
-        requisito2.setText("▶ Al menos debería tener una caracter especial.");
-        requisito2.setPreferredSize(new java.awt.Dimension(266, 22));
+        lblRequisito2.setText("▶ Al menos debería tener una caracter especial.");
+        lblRequisito2.setPreferredSize(new java.awt.Dimension(266, 22));
 
-        requisito3.setText("▶ Al menos deberia tener un número.");
-        requisito3.setPreferredSize(new java.awt.Dimension(266, 22));
+        lblRequisito3.setText("▶ Al menos deberia tener un número.");
+        lblRequisito3.setPreferredSize(new java.awt.Dimension(266, 22));
 
-        requisito4.setText("▶ Debería tener 8 caracteres como mínimo.");
-        requisito4.setPreferredSize(new java.awt.Dimension(266, 22));
+        lblRequisito4.setText("▶ Debería tener 8 caracteres como mínimo.");
+        lblRequisito4.setPreferredSize(new java.awt.Dimension(266, 22));
 
-        diseño.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/registro.jpg"))); // NOI18N
+        lblImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/registro.jpg"))); // NOI18N
+
+        btnIniciarSesion.setBackground(javax.swing.UIManager.getDefaults().getColor("window"));
+        btnIniciarSesion.setForeground(new java.awt.Color(20, 125, 255));
+        btnIniciarSesion.setText("¿Ya tienes una cuenta? Inicia sesión");
+        btnIniciarSesion.setBorderPainted(false);
+        btnIniciarSesion.setContentAreaFilled(false);
+        btnIniciarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarSesionActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(diseño, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(requisito1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(requisito2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(requisito3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(requisito4, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lblRequisito1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblRequisito2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblRequisito3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblRequisito4, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(contrasena)
-                                .addComponent(codigoEstudiante)
-                                .addComponent(correoElectronico)
+                                .addComponent(txtContrasena)
+                                .addComponent(txtCodigoEstudiante)
+                                .addComponent(txtCorreoElectronico)
                                 .addComponent(barraProgreso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(usuario)
-                                .addComponent(confirmacionContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtUsuario)
+                                .addComponent(txtConfirmacionContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(34, 34, 34))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(93, 93, 93)
-                                .addComponent(titulo))
+                                .addComponent(lblTitulo))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(134, 134, 134)
-                                .addComponent(botonRegistrar)))
+                                .addComponent(btnRegistrar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(71, 71, 71)
+                                .addComponent(btnIniciarSesion)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(titulo)
+                .addComponent(lblTitulo)
                 .addGap(18, 18, 18)
-                .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(correoElectronico, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCorreoElectronico, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(codigoEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCodigoEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(contrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(barraProgreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
-                .addComponent(requisito1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblRequisito1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(requisito2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblRequisito2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(requisito3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblRequisito3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(requisito4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblRequisito4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(confirmacionContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(botonRegistrar)
+                .addComponent(txtConfirmacionContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRegistrar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnIniciarSesion)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(diseño, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblImagen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        correoElectronico.getAccessibleContext().setAccessibleName("Correo Electrónico");
-        correoElectronico.getAccessibleContext().setAccessibleDescription("Correo Electrónico (@unmsm.edu.pe)");
-        codigoEstudiante.getAccessibleContext().setAccessibleName("Código de Estudiante");
-        codigoEstudiante.getAccessibleContext().setAccessibleDescription("Código de Estudiante");
-        contrasena.getAccessibleContext().setAccessibleName("Contraseña");
-        contrasena.getAccessibleContext().setAccessibleDescription("Contraseña");
-        confirmacionContrasena.getAccessibleContext().setAccessibleName("confirmacionContraseña");
-        confirmacionContrasena.getAccessibleContext().setAccessibleDescription("confirmacionContraseña");
-        usuario.getAccessibleContext().setAccessibleName("Usuario");
-        usuario.getAccessibleContext().setAccessibleDescription("Usuario");
+        txtCorreoElectronico.getAccessibleContext().setAccessibleName("Correo Electrónico");
+        txtCorreoElectronico.getAccessibleContext().setAccessibleDescription("Correo Electrónico (@unmsm.edu.pe)");
+        txtCodigoEstudiante.getAccessibleContext().setAccessibleName("Código de Estudiante");
+        txtCodigoEstudiante.getAccessibleContext().setAccessibleDescription("Código de Estudiante");
+        txtContrasena.getAccessibleContext().setAccessibleName("Contraseña");
+        txtContrasena.getAccessibleContext().setAccessibleDescription("Contraseña");
+        txtConfirmacionContrasena.getAccessibleContext().setAccessibleName("confirmacionContraseña");
+        txtConfirmacionContrasena.getAccessibleContext().setAccessibleDescription("confirmacionContraseña");
+        txtUsuario.getAccessibleContext().setAccessibleName("Usuario");
+        txtUsuario.getAccessibleContext().setAccessibleDescription("Usuario");
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
-    private void correoElectronicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_correoElectronicoActionPerformed
+    private void txtCorreoElectronicoActionPerformed(java.awt.event.ActionEvent evt) {                                                     
         // TODO add your handling code here:
-    }//GEN-LAST:event_correoElectronicoActionPerformed
+    }                                                    
 
-    private void botonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarActionPerformed
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {                                             
         // TODO add your handling code here:
-    }//GEN-LAST:event_botonRegistrarActionPerformed
+    }                                            
 
-    private void usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarioActionPerformed
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {                                           
         // TODO add your handling code here:
-    }//GEN-LAST:event_usuarioActionPerformed
+    }                                          
 
-    private void codigoEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigoEstudianteActionPerformed
+    private void txtCodigoEstudianteActionPerformed(java.awt.event.ActionEvent evt) {                                                    
         // TODO add your handling code here:
-    }//GEN-LAST:event_codigoEstudianteActionPerformed
+    }                                                   
 
-    private void contrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contrasenaActionPerformed
+    private void txtContrasenaActionPerformed(java.awt.event.ActionEvent evt) {                                              
         // TODO add your handling code here:
-    }//GEN-LAST:event_contrasenaActionPerformed
+    }                                             
+
+    private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+        // TODO add your handling code here:
+    }                                                
 
     /**
-     * Método principal: inicializa el Registro.
+     * Punto de entrada principal para ejecutar la vista de registro.
+     *
+     * <p>Configura el estilo visual Nimbus (si está disponible) y crea la
+     * instancia de la vista junto con su modelo y controlador. Finalmente,
+     * muestra la ventana de registro al usuario.</p>
+     *
+     * @param args argumentos de línea de comandos (no utilizados)
      */
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -287,19 +396,20 @@ public class VistaRegistro extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JProgressBar barraProgreso;
-    private javax.swing.JButton botonRegistrar;
-    private javax.swing.JTextField codigoEstudiante;
-    private javax.swing.JPasswordField confirmacionContrasena;
-    private javax.swing.JPasswordField contrasena;
-    private javax.swing.JTextField correoElectronico;
-    private javax.swing.JLabel diseño;
-    private javax.swing.JLabel requisito1;
-    private javax.swing.JLabel requisito2;
-    private javax.swing.JLabel requisito3;
-    private javax.swing.JLabel requisito4;
-    private javax.swing.JLabel titulo;
-    private javax.swing.JTextField usuario;
-    // End of variables declaration//GEN-END:variables
+    private javax.swing.JButton btnIniciarSesion;
+    private javax.swing.JButton btnRegistrar;
+    private javax.swing.JLabel lblImagen;
+    private javax.swing.JLabel lblRequisito1;
+    private javax.swing.JLabel lblRequisito2;
+    private javax.swing.JLabel lblRequisito3;
+    private javax.swing.JLabel lblRequisito4;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JTextField txtCodigoEstudiante;
+    private javax.swing.JPasswordField txtConfirmacionContrasena;
+    private javax.swing.JPasswordField txtContrasena;
+    private javax.swing.JTextField txtCorreoElectronico;
+    private javax.swing.JTextField txtUsuario;
+    // End of variables declaration                   
 }

@@ -1,5 +1,7 @@
 package Registro;
 
+import Inicio.barraLateral;
+import Login.*;
 import java.awt.Color;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
@@ -43,6 +45,7 @@ public class ControladorRegistro {
         agregarEventos();
     }
 
+    
     /**
      * Registra escuchadores para los campos de contraseña y el botón de registro.
      *
@@ -52,19 +55,22 @@ public class ControladorRegistro {
     private void agregarEventos() {
         CaretListener caretListener = (CaretEvent e) -> actualizarEstadoContrasena();
 
-        vistaRegistro.getCampoContrasena().addCaretListener(caretListener);
-        vistaRegistro.getCampoConfirmacionContrasena().addCaretListener(caretListener);
-
-        vistaRegistro.getBotonRegistrar().addActionListener(e -> registrarUsuario());
+        vistaRegistro.getTxtContrasena().addCaretListener(caretListener);
+        vistaRegistro.getTxtConfirmacionContrasena().addCaretListener(caretListener);
+        vistaRegistro.getBtnRegistrar().addActionListener(e -> registrarUsuario());
+        vistaRegistro.getBtnIniciarSesion().addActionListener(e -> navegarALogin());
     }
 
     /**
      * Actualiza en tiempo real los requisitos visuales de la contraseña:
      * <ul>
-     *   <li>Cambia colores de los requisitos (verde si cumple).</li>
+     *   <li>Cambia los colores de los requisitos (verde si se cumplen).</li>
      *   <li>Actualiza el progreso de la barra de seguridad.</li>
-     *   <li>Aplica color dorado si todos los requisitos están cumplidos y coincide con la confirmación.</li>
+     *   <li>Aplica color dorado cuando todos los requisitos están cumplidos y la confirmación coincide.</li>
      * </ul>
+     *
+     * <p>Además, por razones de seguridad, los arreglos que contienen la contraseña
+     * y su confirmación se limpian inmediatamente después de ser utilizados.</p>
      *
      * <p>Este método actúa como retroalimentación inmediata para el usuario.</p>
      *
@@ -72,8 +78,8 @@ public class ControladorRegistro {
      * @see ModeloRegistro#contrasenaCoincide(java.lang.String, java.lang.String)
      */
     private void actualizarEstadoContrasena() {
-        char[] contrasenaChars = vistaRegistro.getCampoContrasena().getPassword();
-        char[] confirmacionChars = vistaRegistro.getCampoConfirmacionContrasena().getPassword();
+        char[] contrasenaChars = vistaRegistro.getTxtContrasena().getPassword();
+        char[] confirmacionChars = vistaRegistro.getTxtConfirmacionContrasena().getPassword();
 
         String contrasenaTexto = new String(contrasenaChars);
         String confirmacionTexto = new String(confirmacionChars);
@@ -82,19 +88,19 @@ public class ControladorRegistro {
         vistaRegistro.getBarraProgreso().setValue(progreso);
 
         // Actualizar colores de requisitos
-        vistaRegistro.getEtiquetaRequisitoLetra().setForeground(
+        vistaRegistro.getLblRequisitoLetra().setForeground(
                 modeloRegistro.contieneLetra(contrasenaTexto) ? Color.GREEN : Color.BLACK);
-        vistaRegistro.getEtiquetaRequisitoEspecial().setForeground(
+        vistaRegistro.getLblRequisitoEspecial().setForeground(
                 modeloRegistro.contieneCaracterEspecial(contrasenaTexto) ? Color.GREEN : Color.BLACK);
-        vistaRegistro.getEtiquetaRequisitoNumero().setForeground(
+        vistaRegistro.getLblRequisitoNumero().setForeground(
                 modeloRegistro.contieneNumero(contrasenaTexto) ? Color.GREEN : Color.BLACK);
-        vistaRegistro.getEtiquetaRequisitoLongitud().setForeground(
+        vistaRegistro.getLblRequisitoLongitud().setForeground(
                 modeloRegistro.cumpleLongitudMinima(contrasenaTexto) ? Color.GREEN : Color.BLACK);
 
         // Barra dorada cuando todo es correcto
         if (progreso == 100 &&
             modeloRegistro.contrasenaCoincide(contrasenaTexto, confirmacionTexto)) {
-            vistaRegistro.getBarraProgreso().setForeground(new Color(212, 175, 55)); // Dorado
+            vistaRegistro.getBarraProgreso().setForeground(new Color(212, 175, 55));
         } else {
             vistaRegistro.getBarraProgreso().setForeground(new Color(20, 125, 255));
         }
@@ -106,18 +112,21 @@ public class ControladorRegistro {
     /**
      * Valida todos los campos del formulario antes de completar el registro.
      *
-     * <p>Verifica en el siguiente orden:</p>
+     * <p>Las validaciones se realizan en el siguiente orden:</p>
      * <ol>
-     *   <li>Campos obligatorios no vacíos.</li>
-     *   <li>Usuario no existente.</li>
-     *   <li>Formato de correo institucional.</li>
-     *   <li>Longitud del código de estudiante.</li>
-     *   <li>Coincidencia de contraseñas.</li>
-     *   <li>Requisitos completos de seguridad de contraseña.</li>
+     *   <li>Verificación de campos obligatorios no vacíos.</li>
+     *   <li>Comprobación de que el usuario no exista previamente.</li>
+     *   <li>Validación del formato de correo institucional.</li>
+     *   <li>Revisión de la longitud del código de estudiante.</li>
+     *   <li>Coincidencia entre contraseña y su confirmación.</li>
+     *   <li>Verificación de que la contraseña cumpla los 4 requisitos de seguridad.</li>
      * </ol>
      *
-     * <p>Si todas las validaciones se cumplen, se muestra un mensaje
-     * de registro exitoso.</p>
+     * <p>En caso de error en alguna validación, se muestra un mensaje descriptivo
+     * al usuario y se limpian los arreglos de contraseñas por seguridad.</p>
+     *
+     * <p>Si todas las validaciones se cumplen, se notifica un registro exitoso,
+     * se cierra la vista actual y se navega hacia la interfaz principal del sistema.</p>
      *
      * @see ModeloRegistro#usuarioYaExiste(java.lang.String)
      * @see ModeloRegistro#correoEsInstitucional(java.lang.String)
@@ -125,12 +134,12 @@ public class ControladorRegistro {
      * @see ModeloRegistro#calcularProgresoContrasena(java.lang.String)
      */
     private void registrarUsuario() {
-        String nombreUsuario = vistaRegistro.getCampoUsuario().getText().trim();
-        String correoElectronico = vistaRegistro.getCampoCorreo().getText().trim();
-        String codigoEstudiante = vistaRegistro.getCampoCodigoEstudiante().getText().trim();
+        String nombreUsuario = vistaRegistro.getTxtUsuario().getText().trim();
+        String correoElectronico = vistaRegistro.getTxtCorreoElectronico().getText().trim();
+        String codigoEstudiante = vistaRegistro.getTxtCodigoEstudiante().getText().trim();
 
-        char[] contrasenaChars = vistaRegistro.getCampoContrasena().getPassword();
-        char[] confirmacionChars = vistaRegistro.getCampoConfirmacionContrasena().getPassword();
+        char[] contrasenaChars = vistaRegistro.getTxtContrasena().getPassword();
+        char[] confirmacionChars = vistaRegistro.getTxtConfirmacionContrasena().getPassword();
 
         String contrasenaTexto = new String(contrasenaChars);
         String confirmacionTexto = new String(confirmacionChars);
@@ -209,8 +218,30 @@ public class ControladorRegistro {
         JOptionPane.showMessageDialog(vistaRegistro,
                 "Usuario registrado exitosamente.",
                 "Registro completado", JOptionPane.INFORMATION_MESSAGE);
-
+        
+        vistaRegistro.dispose();
+        new barraLateral().setVisible(true);
+        
         Arrays.fill(contrasenaChars, '\0');
         Arrays.fill(confirmacionChars, '\0');
+    }
+    
+    /**
+     * Navega desde la vista de registro hacia la vista de inicio de sesión.
+     *
+     * <p>Este método cierra la ventana actual del formulario de registro
+     * y crea las instancias necesarias para mostrar la ventana de login,
+     * estableciendo su controlador correspondiente.</p>
+     *
+     * <p>Es utilizado cuando el usuario selecciona la opción
+     * "¿Ya tienes una cuenta? Iniciar sesión".</p>
+     */
+    private void navegarALogin() {
+        vistaRegistro.dispose();
+
+        VistaLogin vistaLogin = new VistaLogin();
+        ModeloLogin modeloLogin = new ModeloLogin();
+        new ControladorLogin(modeloLogin, vistaLogin);
+        vistaLogin.setVisible(true);
     }
 }
