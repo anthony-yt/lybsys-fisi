@@ -1,12 +1,12 @@
 package Main;
-
-import Inicio.*;
-
+import Login.*; 
 public class mainLibSys {
 
     public static void main(String[] args) {
-        barraLateral vMainHome = new barraLateral();
-        vMainHome.setVisible(true);
+        ModeloLogin modelo = new ModeloLogin();
+        VistaLogin vista = new VistaLogin();
+        new ControladorLogin(modelo, vista);
+        vista.setVisible(true);
     }
     
 }
