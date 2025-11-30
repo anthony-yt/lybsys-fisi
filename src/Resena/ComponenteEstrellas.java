@@ -12,7 +12,7 @@ import java.util.function.Consumer;
  */
 public class ComponenteEstrellas extends JPanel {
     private final JButton[] estrellas = new JButton[5];
-    private int valor = 0; // 0-5
+    private int valor = 0; // 1-5
 
     /**
      * Crea un componente de estrellas.
@@ -86,7 +86,7 @@ public class ComponenteEstrellas extends JPanel {
     }
 
     /**
-     * Establece el valor de la calificación (0..5).
+     * Establece el valor de la calificación (1..5).
      * @param val valor a establecer
      */
     public void setValor(int val) {
@@ -96,7 +96,7 @@ public class ComponenteEstrellas extends JPanel {
 
     /**
      * Obtiene el valor actual de la calificación.
-     * @return valor (0..5)
+     * @return valor (1..5)
      */
     public int getValor() { return valor; }
 }

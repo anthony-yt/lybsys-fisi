@@ -17,7 +17,7 @@ public class ControladorResenas {
     private final LoanController controladorPrestamos;
 
     /**
-     * Crea el controlador con un repositorio apuntando al CSV dado.
+     * Crea el controlador con un repositorio apuntando al CSV dado.    
      * @param csvPath ruta al CSV donde se almacenan las reseñas
      * @param controladorPrestamos controlador de préstamos para validar acceso
      */
