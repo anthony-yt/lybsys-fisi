@@ -41,6 +41,7 @@ public class barraLateral extends JFrame {
      */
     public barraLateral() {
         initComponents();
+        this.setLocationRelativeTo(null);
         // Agregar las tres vistas al panel de capas
         panelEnCapas.add(vistaInicio);
         panelEnCapas.add(vistaCatalogo);
@@ -50,7 +51,7 @@ public class barraLateral extends JFrame {
         vistaCatalogo.setVisible(false);
         vistaPerfil.setVisible(false);
     }
-                  
+
     /**
      * Inicializa los componentes gráficos del frame.
      * Configura los botones de navegación, el panel de barra lateral,
