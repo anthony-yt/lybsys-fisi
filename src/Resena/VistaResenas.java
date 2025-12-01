@@ -47,7 +47,7 @@ public class VistaResenas extends JPanel {
     public VistaResenas(String idLibro, CatalogController catalogController, LoanController controladorPrestamos) {
         this.idLibro = idLibro;
         this.controladorPrestamos = controladorPrestamos;
-        this.controlador = new ControladorResenas("data/reviews.csv", controladorPrestamos);
+        this.controlador = new ControladorResenas("datos/reviews.csv", controladorPrestamos);
 
         setLayout(new GridLayout(1, 2, 15, 0)); 
         setBorder(BorderFactory.createTitledBorder("Comentarios y Valoraciones"));
