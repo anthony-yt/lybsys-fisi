@@ -30,10 +30,14 @@ public class barraLateral extends JFrame {
     private JPanel panelBarraLateral;
     private JLayeredPane panelEnCapas;
 
-    vistaInicio vistaInicio = new vistaInicio();
-    vistaCatalogo vistaCatalogo = new vistaCatalogo();
-    vistaPerfil vistaPerfil = new vistaPerfil();
+    private vistaInicio vistaInicio = new vistaInicio(this);
+    private vistaCatalogo vistaCatalogo = new vistaCatalogo();
+    private vistaPerfil vistaPerfil = new vistaPerfil();
     
+    public vistaCatalogo getVistaCatalogo()
+    {
+        return vistaCatalogo;
+    }
     /**
      * Constructor de la clase barraLateral.
      * Inicializa los componentes de la interfaz gráfica y configura
@@ -94,7 +98,7 @@ public class barraLateral extends JFrame {
         btnCatalogo.setBorder(BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnCatalogo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btncatalogActionPerformed(evt);
+                btnCatalogActionPerformed(evt);
             }
         });
 
@@ -175,7 +179,7 @@ public class barraLateral extends JFrame {
      * 
      * @param evt evento de acción generado al hacer clic en el botón CATÁLOGO
      */
-    private void btncatalogActionPerformed(java.awt.event.ActionEvent evt) {                                           
+    public void btnCatalogActionPerformed(java.awt.event.ActionEvent evt) {                                           
         // Mostrar la vista del catálogo
         vistaInicio.setVisible(false);
         vistaCatalogo.setVisible(true);

@@ -1,5 +1,6 @@
 package Login;
 
+import Auth.SessionManager;
 import Registro.VistaRegistro;
 import Registro.ControladorRegistro;
 import Registro.ModeloRegistro;
@@ -51,6 +52,10 @@ public class ControladorLogin {
             return;
         }
 
+        if(!modelo.verificarCorreo(correo)) {
+            vista.mostrarError("Debes colocar tu correo institucional");
+        }
+
         if (modelo.autenticarUsuario(correo, password)) {
             JOptionPane.showMessageDialog(vista, 
                     "¡Bienvenido! Has iniciado sesión correctamente.", 
@@ -58,6 +63,7 @@ public class ControladorLogin {
                     JOptionPane.INFORMATION_MESSAGE);
             
             vista.dispose();
+            SessionManager.agregarUsuarioActual(correo);
             new barraLateral().setVisible(true); 
         } else {
             vista.mostrarError("Credenciales incorrectas.");

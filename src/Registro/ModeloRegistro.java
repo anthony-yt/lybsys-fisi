@@ -1,5 +1,6 @@
 package Registro;
 
+import Auth.SessionManager;
 /**
  * Modelo encargado de realizar todas las validaciones necesarias para el proceso
  * de registro de usuarios. Esta clase no interactúa con la interfaz gráfica ni
@@ -23,15 +24,13 @@ public class ModeloRegistro {
     /**
      * Verifica si un nombre de usuario ya se encuentra registrado.
      *
-     * <p>Actualmente la validación es simulada usando valores fijos.
-     * En un escenario real debería consultarse una base de datos o archivo.</p>
-     *
      * @param nombreUsuario nombre ingresado por el usuario
      * @return {@code true} si el usuario ya existe, {@code false} en caso contrario
      */
     public boolean usuarioYaExiste(String nombreUsuario) {
         return nombreUsuario.equalsIgnoreCase("admin")
-                || nombreUsuario.equalsIgnoreCase("usuario1");
+                || nombreUsuario.equalsIgnoreCase("usuario1")
+                    || SessionManager.buscarCoincidencia(nombreUsuario);
     }
 
     /**

@@ -1,6 +1,6 @@
 package Resena;
 
-import Catalogo.LoanController;
+import Catalogo.ControladorPrestamo;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,14 +14,14 @@ import java.util.Optional;
  */
 public class ControladorResenas {
     private final RepositorioResenas repositorio;
-    private final LoanController controladorPrestamos;
+    private final ControladorPrestamo controladorPrestamos;
 
     /**
      * Crea el controlador con un repositorio apuntando al CSV dado.    
      * @param csvPath ruta al CSV donde se almacenan las reseñas
      * @param controladorPrestamos controlador de préstamos para validar acceso
      */
-    public ControladorResenas(String csvPath, LoanController controladorPrestamos) {
+    public ControladorResenas(String csvPath, ControladorPrestamo controladorPrestamos) {
         this.repositorio = new RepositorioResenas(csvPath);
         this.controladorPrestamos = controladorPrestamos;
     }
@@ -76,7 +76,7 @@ public class ControladorResenas {
         if (texto != null) {
             if (texto.length() < 10 || texto.length() > 500) throw new IllegalArgumentException("Texto debe ser entre 10 y 500 caracteres");
         }
-        if (!controladorPrestamos.usuarioHaCompletadoPrestamo(idLibro) && !controladorPrestamos.usuarioTieneLibro(idLibro)) {
+        if (!controladorPrestamos.usuarioTieneLibro(idLibro)) {
             throw new IllegalStateException("Solo puedes reseñar si completaste el préstamo del libro");
         }
         Resena r = new Resena(0, idLibro, idUsuario, calificacion, texto == null ? "" : texto, Resena.fechaActualISO());

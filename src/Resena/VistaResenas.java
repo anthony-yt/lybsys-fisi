@@ -1,7 +1,7 @@
 package Resena;
 
-import Catalogo.CatalogController;
-import Catalogo.LoanController;
+import Catalogo.ControladorCatalogo;
+import Catalogo.ControladorPrestamo;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -20,7 +20,7 @@ import java.util.Optional;
 public class VistaResenas extends JPanel {
     private final String idLibro;
     private final ControladorResenas controlador;
-    private final LoanController controladorPrestamos;
+    private final ControladorPrestamo controladorPrestamos;
 
     private final JPanel listaResenas = new JPanel();
     private int pagina = 1;
@@ -44,7 +44,7 @@ public class VistaResenas extends JPanel {
      * @param catalogController controlador del catálogo (lecturas complementarias)
      * @param controladorPrestamos controlador de préstamos para condiciones de acceso
      */
-    public VistaResenas(String idLibro, CatalogController catalogController, LoanController controladorPrestamos) {
+    public VistaResenas(String idLibro, ControladorCatalogo catalogController, ControladorPrestamo controladorPrestamos) {
         this.idLibro = idLibro;
         this.controladorPrestamos = controladorPrestamos;
         this.controlador = new ControladorResenas("datos/reviews.csv", controladorPrestamos);
@@ -160,7 +160,7 @@ public class VistaResenas extends JPanel {
                     btnEliminar.setVisible(false); // Ocultar botón eliminar
                 }
 
-                boolean permitido = controladorPrestamos.usuarioHaCompletadoPrestamo(idLibro) || controladorPrestamos.usuarioTieneLibro(idLibro);
+                boolean permitido = controladorPrestamos.usuarioTieneLibro(idLibro);
                 
                 estrellasInput.setVisible(permitido);
                 txtResena.setEnabled(permitido);

@@ -38,6 +38,14 @@ public class ControladorPrestamo {
     }
 
     /**
+     * Devuelve el usuario actual.
+     * @return String del usuario actual
+     */
+    public String obtenerIdUsuarioActual() {
+        return idUsuarioActual;
+    }
+
+    /**
      * Obtiene los IDs de los libros prestados por el usuario actual.
      * @return lista de IDs de libros
      */
