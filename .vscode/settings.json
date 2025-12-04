@@ -1,5 +1,9 @@
 {
     "java.project.referencedLibraries": [
-        "lib/**/*.jar"
+        "lib/**/*.jar",
+        "c:\\Users\\leoda\\Downloads\\commons-logging-1.2.jar",
+        "c:\\Users\\leoda\\Downloads\\fontbox-3.0.6.jar",
+        "c:\\Users\\leoda\\Downloads\\pdfbox-io-3.0.6.jar",
+        "c:\\Users\\leoda\\Downloads\\pdfbox-3.0.6.jar"
     ]
 }
