@@ -1,6 +1,7 @@
 package Catalogo;
 
 import java.util.*;
+import Lectura.VistaLectura;
 
 /**
  * Controlador simplificado para gestionar préstamos y colas de espera (simulación en memoria).
@@ -164,10 +165,41 @@ public class ControladorPrestamo {
      * Abre/Lee un libro que el usuario ya tiene (simulación).
      * @param idLibro id del libro
      */
-    public void abrirLibro(String idLibro) {
-        if (usuarioTieneLibro(idLibro)) {
-            System.out.println("Abriendo libro: " + idLibro);
-            // Aquí iría la lógica para abrir el lector de PDF/E-book
+    // Importa tu VistaLectura (ajusta el paquete real)
+   // <-- cambia "Lectura" por el paquete correcto
+
+    /**
+     * Abre/Lee un libro que el usuario ya tiene.
+     * @param idLibro id del libro
+     * @param controladorCatalogo controlador de catálogo para obtener datos del libro
+     */
+    public void abrirLibro(String idLibro, ControladorCatalogo controladorCatalogo) {
+        if (!usuarioTieneLibro(idLibro)) {
+            System.out.println("El usuario no tiene este libro prestado.");
+            return;
+        }
+
+        Optional<Libro> libroOpt = controladorCatalogo.obtenerPorId(idLibro);
+        if (libroOpt.isEmpty()) {
+            System.out.println("Libro no encontrado en el catálogo.");
+            return;
+        }
+
+        Libro libro = libroOpt.get();
+
+        
+        String rutaArchivo = libro.getRutaPdf();   
+        String formato     = libro.getFormato();   
+
+        try {
+            VistaLectura vistaLectura = new VistaLectura();          
+            vistaLectura.cargarLibro(idLibro, idUsuarioActual, rutaArchivo, formato);
+            vistaLectura.setVisible(true);
+
+            System.out.println("Abriendo libro " + idLibro + " desde: " + rutaArchivo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("No se pudo abrir el lector de PDF.");
         }
     }
 }
