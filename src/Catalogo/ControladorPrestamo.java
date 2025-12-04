@@ -168,38 +168,43 @@ public class ControladorPrestamo {
     // Importa tu VistaLectura (ajusta el paquete real)
    // <-- cambia "Lectura" por el paquete correcto
 
+     
+
     /**
      * Abre/Lee un libro que el usuario ya tiene.
      * @param idLibro id del libro
-     * @param controladorCatalogo controlador de catálogo para obtener datos del libro
+     * @param controladorCatalogo controlador de catálogo para obtener información del libro
      */
     public void abrirLibro(String idLibro, ControladorCatalogo controladorCatalogo) {
+    
+
         if (!usuarioTieneLibro(idLibro)) {
-            System.out.println("El usuario no tiene este libro prestado.");
+            System.out.println("El usuario no tiene este libro.");
             return;
         }
+    
 
         Optional<Libro> libroOpt = controladorCatalogo.obtenerPorId(idLibro);
         if (libroOpt.isEmpty()) {
-            System.out.println("Libro no encontrado en el catálogo.");
+            System.out.println("Libro no encontrado.");
             return;
         }
-
+    
         Libro libro = libroOpt.get();
-
-        
-        String rutaArchivo = libro.getRutaPdf();   
-        String formato     = libro.getFormato();   
-
+    
+        String rutaArchivo = libro.getRutaArchivo();  
+        String formato = libro.getFormato();          
+    
         try {
-            VistaLectura vistaLectura = new VistaLectura();          
-            vistaLectura.cargarLibro(idLibro, idUsuarioActual, rutaArchivo, formato);
-            vistaLectura.setVisible(true);
-
-            System.out.println("Abriendo libro " + idLibro + " desde: " + rutaArchivo);
+            VistaLectura vista = new VistaLectura();   
+            vista.cargarLibro(idLibro, idUsuarioActual, rutaArchivo, formato);
+            vista.setVisible(true);
+    
+            System.out.println("Abriendo libro: " + idLibro + " desde " + rutaArchivo);
+    
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("No se pudo abrir el lector de PDF.");
+            System.out.println("No se pudo abrir la vista de lectura.");
         }
     }
 }
