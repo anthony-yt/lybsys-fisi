@@ -1,9 +1,12 @@
 package Catalogo;
 
+import Perfil.io.PrestamoRepositorio;
+import Auth.SessionManager;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -266,6 +269,9 @@ public class VerDetalleLibro extends JPanel {
         } else if (estado == ControladorPrestamo.EstadoLibro.DISPONIBLE) {
             if (controladorPrestamo.pedirPrestamo(libro.getId(), controladorCatalogo)) {
                 JOptionPane.showMessageDialog(this, "Préstamo realizado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                String[] s = SessionManager.buscarUsuarioNombre(SessionManager.obtenerUsuarioActual()).split(" ");
+                PrestamoRepositorio.agregarPrestamo("datos\\usuarios.csv", 1, Integer.parseInt(libro.getId()), libro.getTitulo(),
+                estado.toString(), "2025-12-10", libro.getRutaPortada(), s[1]);
                 actualizarVista();
             } else {
                 JOptionPane.showMessageDialog(this, "Error al realizar el préstamo.", "Error", JOptionPane.ERROR_MESSAGE);

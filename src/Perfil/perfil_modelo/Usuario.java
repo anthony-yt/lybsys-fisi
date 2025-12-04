@@ -14,4 +14,3 @@ public class Usuario {
     public String getCorreo() { return correo; }
     public String getAvatar() { return avatar; }
 }
-

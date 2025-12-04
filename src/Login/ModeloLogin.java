@@ -92,7 +92,7 @@ public class ModeloLogin {
         String correoInsti;
         String contra;
 
-        String datos = SessionManager.buscarUsuario(correo);
+        String datos = SessionManager.buscarUsuarioCorreo(correo);
         if (datos == null) { return ""; }
         String[] datosSeparados = datos.split(" ");
         nombre = datosSeparados[0];

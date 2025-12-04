@@ -105,11 +105,61 @@ public class PrestamoRepositorio {
         return out;
     }
 
+    /**
+     * Corrige comillas dobles al extraer texto del csv.
+     * @param s Texto a corregir
+     * @return {@code String} Texto sin comillas
+     */
     private static String unquote(String s) {
         if (s.length() >= 2 && s.startsWith("\"") && s.endsWith("\"")) {
             return s.substring(1, s.length() - 1);
         }
         return s;
+    }
+
+    /**
+     * Agrega nuevos préstamos al csv.
+     * @param ruta Ruta del csv
+     * @param loanId Índice del préstamo
+     * @param bookId Id del libro
+     * @param titulo Título del libro
+     * @param estado Estado de pedido del libro
+     * @param fechaVencimiento Expiración del préstamo
+     * @param portada Ruta de la portada del libro
+     * @param correoUsuario Correo del usuario
+     */
+    public static void agregarPrestamo(String ruta, int loanId, int bookId, String titulo, String estado, String fechaVencimiento, String portada, String correoUsuario) {
+        Path p = Path.of(ruta);
+
+        try (var bw = Files.newBufferedWriter(p, StandardCharsets.UTF_8, java.nio.file.StandardOpenOption.CREATE, java.nio.file.StandardOpenOption.APPEND)) {
+
+            String linea = String.join(",", csv(loanId), csv(bookId), csv(titulo), csv(estado), csv(fechaVencimiento), csv(portada == null ? "" : portada), csv(correoUsuario));
+
+            bw.write(linea);
+            bw.newLine();
+        }
+        catch (IOException e) {
+            System.err.println("No se pudo leer el archivo csv");
+        }
+    }
+
+    /**
+     * Funcion auxiliar para eliminar cadenas problemáticas para el csv.
+     * @param o Objeto a examinar
+     * @return {@code String} vacío si el objeto es nulo, o la cadena corregida
+     */
+    private static String csv(Object o) {
+        if (o == null) return "";
+
+        String s = o.toString();
+        boolean necesitaComillas =
+                s.contains(",") || s.contains("\"") || s.contains("\n");
+
+        if (s.contains("\"")) {
+            s = s.replace("\"", "\"\"");
+        }
+
+        return necesitaComillas ? "\"" + s + "\"" : s;
     }
 }
 

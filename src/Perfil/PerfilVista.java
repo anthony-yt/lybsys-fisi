@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.table.*;
 
+import Catalogo.ControladorCatalogo;
+import Catalogo.VerDetalleLibro;
 import Perfil.perfil_modelo.Prestamo;
 import Perfil.perfil_modelo.Usuario;
 
@@ -41,7 +43,6 @@ public class PerfilVista extends JPanel {
                 p.getTitulo(),
                 p.getEstado(),
                 p.getFechaVencimiento(),
-                "Leer"
             });
         }
     }
@@ -66,7 +67,7 @@ public class PerfilVista extends JPanel {
         add(panelTop, BorderLayout.BEFORE_FIRST_LINE);
 
         modeloTabla = new DefaultTableModel(
-            new Object[]{"ID", "Título", "Estado", "Vence", "Acción"},
+            new Object[]{"ID", "Título", "Estado", "Vence"},
             0
         ) {
             @Override
@@ -78,51 +79,7 @@ public class PerfilVista extends JPanel {
         tablaPrestamos = new JTable(modeloTabla);
         tablaPrestamos.setRowHeight(35);
 
-        tablaPrestamos.getColumnModel().getColumn(4).setCellRenderer(new BotonRenderer());
-        tablaPrestamos.getColumnModel().getColumn(4).setCellEditor(new BotonEditor());
-
         JScrollPane scroll = new JScrollPane(tablaPrestamos);
         add(scroll, BorderLayout.CENTER);
-    }
-
-    private class BotonRenderer extends JButton implements TableCellRenderer {
-        public BotonRenderer() {
-            setText("Leer");
-            setBackground(new Color(255, 204, 0));
-            setForeground(Color.BLACK);
-        }
-
-        @Override
-        public Component getTableCellRendererComponent(
-                JTable table, Object value, boolean isSelected,
-                boolean hasFocus, int row, int col) {
-            return this;
-        }
-    }
-
-    private class BotonEditor extends DefaultCellEditor {
-        private JButton boton;
-        private int idLibro;
-
-        public BotonEditor() {
-            super(new JTextField());
-            boton = new JButton("Leer");
-            boton.setBackground(new Color(255, 204, 0));
-
-            boton.addActionListener(e -> {
-                if (listener != null) {
-                    listener.onLeerLibro(idLibro);
-                }
-                fireEditingStopped();
-            });
-        }
-
-        @Override
-        public Component getTableCellEditorComponent(
-                JTable table, Object value, boolean isSelected, int row, int col) {
-
-            idLibro = (int) table.getValueAt(row, 0);
-            return boton;
-        }
     }
 }

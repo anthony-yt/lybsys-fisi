@@ -52,7 +52,7 @@ public class SessionManager {
      * @param usuario el correo del usuario
      * @param contrasena la contraseña del usuario
      */
-    public static void escribirUsuarios(String nombre, String usuario, String contrasena) {
+    public static void escribirUsuarios(String nombre, String usuario, String contrasena, String avatar) {
         try (BufferedWriter escritor = new BufferedWriter(new FileWriter(rutaUsuarios, true))){
             escritor.write(nombre.trim() + " " + usuario.trim() + " " + contrasena.trim());
             escritor.newLine();
@@ -66,12 +66,32 @@ public class SessionManager {
      * @param correo filtra por correo
      * @return {@code String} nombre de usuario, correo y contraseña
      */
-    public static String buscarUsuario(String correo) {
+    public static String buscarUsuarioCorreo(String correo) {
         try (BufferedReader lector = new BufferedReader(new FileReader(rutaUsuarios))) {
             String linea;
             while ((linea = lector.readLine()) != null) {
                 String[] campos = linea.split(" ");
                 if (campos[1].equals(correo)) {
+                    return linea;
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("No se pudo leer el archivo");
+        }
+        return null;
+    }
+
+    /**
+     * Busca el usuario dentro de la base de datos.
+     * @param correo filtra por correo
+     * @return {@code String} nombre de usuario, correo y contraseña
+     */
+    public static String buscarUsuarioNombre(String nombre) {
+        try (BufferedReader lector = new BufferedReader(new FileReader(rutaUsuarios))) {
+            String linea;
+            while ((linea = lector.readLine()) != null) {
+                String[] campos = linea.split(" ");
+                if (campos[0].equals(nombre)) {
                     return linea;
                 }
             }

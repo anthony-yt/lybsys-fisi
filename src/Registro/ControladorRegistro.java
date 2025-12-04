@@ -232,7 +232,7 @@ public class ControladorRegistro {
                 "Registro completado", JOptionPane.INFORMATION_MESSAGE);
         
         vistaRegistro.dispose();
-        SessionManager.escribirUsuarios(nombreUsuario, correoElectronico, contrasenaTexto);
+        SessionManager.escribirUsuarios(nombreUsuario, correoElectronico, contrasenaTexto, "src\\Perfil\\assets\\avatar.jpg");
         SessionManager.agregarUsuarioActual(nombreUsuario);
         new barraLateral().setVisible(true);
         

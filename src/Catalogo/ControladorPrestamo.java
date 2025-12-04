@@ -2,6 +2,7 @@ package Catalogo;
 
 import java.util.*;
 import Lectura.VistaLectura;
+import Perfil.io.PrestamoRepositorio;
 
 /**
  * Controlador simplificado para gestionar préstamos y colas de espera (simulación en memoria).

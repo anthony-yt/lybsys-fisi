@@ -1,2 +1,2 @@
-a a@unmsm.edu.pe w
-CanchoVillon Denis.Martinez@unmsm.edu.pe Isidro1234!
+a a@unmsm.edu.pe w src\Perfil\assets\avatar.jpg
+CanchoVillon Denis.Martinez@unmsm.edu.pe Isidro1234! src\Perfil\assets\avatar.jpg

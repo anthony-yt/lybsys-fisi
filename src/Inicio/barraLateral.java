@@ -2,9 +2,16 @@
 package Inicio;
 
 import javax.swing.*;
+
+import Auth.SessionManager;
+
+import java.util.List;
 import java.awt.*;
 import Catalogo.*;
 import Perfil.*;
+import Perfil.io.PrestamoRepositorio;
+import Perfil.perfil_modelo.Prestamo;
+import Perfil.perfil_modelo.Usuario;
 
 /**
  * La clase barraLateral representa una barra lateral de navegación implementada como JFrame.
@@ -193,7 +200,9 @@ public class barraLateral extends JFrame {
      * 
      * @param evt evento de acción generado al hacer clic en el botón PERFIL
      */
-    private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {                                          
+    private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {
+        cargarPerfil();
+        
         // Mostrar la vista del perfil
         vistaInicio.setVisible(false);
         vistaCatalogo.setVisible(false);
@@ -224,5 +233,45 @@ public class barraLateral extends JFrame {
         // Crear y mostrar la ventana principal en el hilo de eventos
         EventQueue.invokeLater(() -> new barraLateral().setVisible(true));
     }
-           
+
+
+    /**
+     * Agrega los datos de perfil a la clase Usuario.
+     */
+    private void cargarPerfil() {
+        try {
+            String nombreUsuario = SessionManager.obtenerUsuarioActual();
+
+            if (nombreUsuario == null || nombreUsuario.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No hay usuario en sesión.");
+                return;
+            }
+            
+            // Buscar en tu base de usuarios TXT
+            String linea = SessionManager.buscarUsuarioNombre(nombreUsuario);
+
+            if (linea == null) {
+                JOptionPane.showMessageDialog(this, "El usuario no fue encontrado.");
+                return;
+            }
+
+            // Formato: nombre correo contraseña
+            String[] campos = linea.split(" ");
+            String nombre = campos[0];
+            String correoUsuario = campos[1];
+            String avatar = campos[3];
+
+            // Cargar usuario en la vista
+            Usuario usuario = new Usuario(nombre, correoUsuario, avatar);
+            vistaPerfil.setUsuario(usuario);
+
+            // Cargar préstamos
+            List<Prestamo> prestamos = PrestamoRepositorio.cargarPrestamosPorCorreo("datos\\usuarios.csv", correoUsuario);
+
+            vistaPerfil.mostrarPrestamos(prestamos);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error cargando perfil:\n" + e.getMessage());
+        }
+    }     
 }

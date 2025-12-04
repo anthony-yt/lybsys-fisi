@@ -1,11 +1,6 @@
-id,bookId,userId,rating,text,date
-1,"1","Chichobelo",4,"Interesante lectura.","2025-11-26"
-2,"2","Diego Roldán",3,"Aceptable, pero esperaba más.","2025-11-26"
-3,"2","user1",5,"Me agradó bastante el libro","2025-11-26"
-5,"12","user1",4,"tremendo mierdon","2025-11-26"
-6,"1","user1",1,"no me ha gustado","2025-11-29"
-7,"1","usuario1",5,"TA PIOLA EL LIBRO","2025-12-04"
-8,"1","",5,"Fácil de entender, me ayudó para aprobar el curso de Programación 2","2025-12-04"
-9,"1","a",5,"Muy buen libro","2025-12-04"
-10,"3","a",1,"Ya no quedan copias","2025-12-04"
-11,"1","CanchoVillon",5,"Me ayudó a no tricar GAAAAAAAA","2025-12-04"
+loanId,bookId,titulo estado,fechaVencimiento,portada,correo
+1,101,"El Principito","En curso","2025-11-15","perfil/assets/portadas/principito.jpg","jhair@correo.com"
+2,102,"1984","En curso","2025-12-01","perfil/assets/portadas/1984.jpg","ana@correo.com"
+3,103,"Cien años de soledad","Vencido","2025-11-10","perfil/assets/portadas/100anios.jpg","luima@correo.com"
+1,1,"Introducción a Java","DISPONIBLE","2025-12-10","src\recursos\imagenes\IntroducciónAJava.png","a@unmsm.edu.pe"
+1,1,Introducción a Java,DISPONIBLE,2025-12-10,src\recursos\imagenes\IntroducciónAJava.png,a a@unmsm.edu.pe w src\Perfil\assets\avatar.jpg
