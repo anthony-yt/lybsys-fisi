@@ -90,6 +90,11 @@ public class vistaCatalogo extends JPanel {
         txtTitulo.addActionListener(e -> buscarLibros());
     }
 
+    public void crearBusqueda(JTextField t) {
+        txtTitulo.setText(t.getText().trim());
+        buscarLibros();
+    }
+
     private void buscarLibros() {
         String tituloFiltro = txtTitulo.getText();
         String categoriaSel = (String) cbCategoria.getSelectedItem();

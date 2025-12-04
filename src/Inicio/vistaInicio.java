@@ -3,6 +3,7 @@ package Inicio;
 
 import javax.swing.*;
 import java.awt.*;
+import Login.*;
 
 /**
  * La clase vistaInicio representa la pantalla de inicio de la aplicación.
@@ -29,12 +30,14 @@ public class vistaInicio extends JPanel {
     private JPanel panelBarraSuperior;
     private JTextField txtBarraBusqueda;  
     private barraBusqueda buscador;
+    private barraLateral barraLateral;
 
     /**
      * Constructor de la clase vistaInicio.
      * Inicializa los componentes gráficos de la vista de inicio.
      */
-    public vistaInicio() {
+    public vistaInicio(barraLateral b) {
+        barraLateral = b;
         initComponents();
     }
                 
@@ -78,6 +81,12 @@ public class vistaInicio extends JPanel {
         btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnlogoutActionPerformed(evt);
+                barraLateral.dispose();
+
+                VistaLogin vistaLogin = new VistaLogin();
+                ModeloLogin modeloLogin = new ModeloLogin();
+                new ControladorLogin(modeloLogin, vistaLogin);
+                vistaLogin.setVisible(true);
             }
         });
 
@@ -213,7 +222,11 @@ public class vistaInicio extends JPanel {
      */
     private void txtsearchbarActionPerformed(java.awt.event.ActionEvent evt) {                                             
         // Obtener el texto ingresado en la barra de búsqueda y realizar búsqueda
-        // TODO add your handling code here:
+        JTextField txtBusqueda = txtBarraBusqueda;
+        if ("".equals(txtBusqueda.getText().trim())) { return; }
+        barraLateral.btnCatalogActionPerformed(evt);
+        barraLateral.getVistaCatalogo().crearBusqueda(txtBusqueda);
+        buscador = null;
     }                                            
 
     /**
@@ -223,9 +236,13 @@ public class vistaInicio extends JPanel {
      * 
      * @param evt evento de acción generado al hacer clic en el botón Buscar
      */
-    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {                                          
+    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {                                        
         // Ejecutar búsqueda con el contenido de la barra de búsqueda
-        // TODO add your handling code here:
+        JTextField txtBusqueda = txtBarraBusqueda;
+        if ("".equals(txtBusqueda.getText().trim())) { return; }
+        barraLateral.btnCatalogActionPerformed(evt);
+        barraLateral.getVistaCatalogo().crearBusqueda(txtBusqueda);
+        buscador = null;
     }
 
 }

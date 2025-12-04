@@ -1,5 +1,6 @@
 package Registro;
 
+import Auth.SessionManager;
 import Inicio.barraLateral;
 import Login.*;
 import java.awt.Color;
@@ -181,6 +182,17 @@ public class ControladorRegistro {
             return;
         }
 
+        // Correo institucional existente
+        if (modeloRegistro.usuarioYaExiste(correoElectronico)) {
+            JOptionPane.showMessageDialog(vistaRegistro,
+                    "El correo ya está registrado.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+
+            Arrays.fill(contrasenaChars, '\0');
+            Arrays.fill(confirmacionChars, '\0');
+            return;
+        }
+
         // Código de estudiante
         if (!modeloRegistro.logitudCodigoEstudiante(codigoEstudiante)) {
             JOptionPane.showMessageDialog(vistaRegistro,
@@ -220,6 +232,8 @@ public class ControladorRegistro {
                 "Registro completado", JOptionPane.INFORMATION_MESSAGE);
         
         vistaRegistro.dispose();
+        SessionManager.escribirUsuarios(nombreUsuario, correoElectronico, contrasenaTexto);
+        SessionManager.agregarUsuarioActual(correoElectronico);
         new barraLateral().setVisible(true);
         
         Arrays.fill(contrasenaChars, '\0');
