@@ -1,4 +1,4 @@
-package perfil.io;
+package Perfil.io;
 
 import java.io.BufferedReader;
 import java.nio.charset.StandardCharsets;
@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import perfil.perfil_modelo.Usuario;
+import Perfil.perfil_modelo.Usuario;
 
 public class UsuarioRepositorio {
 

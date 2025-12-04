@@ -1,5 +1,6 @@
 package Auth;
 
+import Catalogo.ControladorPrestamo;
 import java.io.*;
 
 /**
@@ -21,6 +22,7 @@ public class SessionManager {
      */
     public static void agregarUsuarioActual(String s) {
         user = s;
+        ControladorPrestamo.establecerUsuarioActual(s);
         System.out.println("SesionActual: " + s);
     }
     

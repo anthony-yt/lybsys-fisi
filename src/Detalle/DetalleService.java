@@ -46,7 +46,4 @@ public class DetalleService {
             System.out.println("No hay copias disponibles para: " + libro.getTitulo());
         }
     }
-
-    // TODO: añadir métodos reales: borrowOrOpen(userId, libro), availableCopies(bookId),
-    // userHasBook(userId, bookId), etc.
 }

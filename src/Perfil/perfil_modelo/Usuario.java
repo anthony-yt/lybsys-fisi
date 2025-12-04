@@ -1,4 +1,4 @@
-package perfil.perfil_modelo;
+package Perfil.perfil_modelo;
 
 public class Usuario {
     private final String nombre;

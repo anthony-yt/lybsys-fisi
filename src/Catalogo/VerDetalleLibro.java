@@ -215,10 +215,10 @@ public class VerDetalleLibro extends JPanel {
 
         switch (estado) {
             case YA_TIENE:
-                boton.setText("📖 Ya tienes este libro");
-                boton.setBackground(new Color(220, 220, 220)); 
-                boton.setForeground(Color.GRAY);
-                boton.setEnabled(false);
+                boton.setText("📖 Leer el libro");
+                boton.setBackground(new Color(144, 238, 144)); 
+                boton.setForeground(Color.BLACK);
+                boton.addActionListener(e -> pedirOAbrirLibro());
                 break;
             case DISPONIBLE:
                 boton.setText("📚 Solicitar Préstamo");
@@ -254,6 +254,9 @@ public class VerDetalleLibro extends JPanel {
         return boton;
     }
 
+    /**
+     * Pide acceso al libro o abre el libro.
+     */
     private void pedirOAbrirLibro() {
         ControladorPrestamo.EstadoLibro estado = controladorPrestamo.obtenerEstadoLibro(libro.getId(), controladorCatalogo);
 

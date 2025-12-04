@@ -10,7 +10,7 @@ public class ControladorPrestamo {
     private static ControladorPrestamo instancia;
     private Map<String, List<String>> prestamosPorUsuario = new HashMap<>(); // idUsuario -> lista de idLibros
     private Map<String, Integer> colaPrestamo = new HashMap<>(); // idLibro -> cantidad de usuarios en cola
-    private String idUsuarioActual = "usuario1"; // Simulación de usuario actual
+    private static String idUsuarioActual;
 
     private ControladorPrestamo() {
         // Datos iniciales simulados
@@ -30,11 +30,11 @@ public class ControladorPrestamo {
     }
 
     /**
-     * Establece el usuario actual (simulación).
+     * Establece el usuario actual.
      * @param idUsuario identificador de usuario
      */
-    public void establecerUsuarioActual(String idUsuario) {
-        this.idUsuarioActual = idUsuario;
+    public static void establecerUsuarioActual(String idUsuario) {
+        idUsuarioActual = idUsuario;
     }
 
     /**

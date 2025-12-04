@@ -32,7 +32,7 @@ public class barraLateral extends JFrame {
 
     private vistaInicio vistaInicio = new vistaInicio(this);
     private vistaCatalogo vistaCatalogo = new vistaCatalogo();
-    private vistaPerfil vistaPerfil = new vistaPerfil();
+    private PerfilVista vistaPerfil = new PerfilVista();
     
     public vistaCatalogo getVistaCatalogo()
     {

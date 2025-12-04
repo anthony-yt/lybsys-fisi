@@ -131,12 +131,13 @@ public class ControladorLogin {
             return;
         }
 
-        if (modelo.autenticarUsuario(correo, password)) {
+        String nombreUsuario = modelo.autenticarUsuario(correo, password);
+        if (!nombreUsuario.equals("")) {
             JOptionPane.showMessageDialog(vista, 
                     "¡Bienvenido! Has iniciado sesión correctamente.", 
                     "Login Exitoso", 
                     JOptionPane.INFORMATION_MESSAGE);
-            
+            SessionManager.agregarUsuarioActual(nombreUsuario);
             vista.dispose(); 
             new barraLateral().setVisible(true); 
         } else {

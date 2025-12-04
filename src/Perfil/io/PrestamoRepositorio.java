@@ -1,4 +1,4 @@
-package perfil.io;
+package Perfil.io;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import perfil.perfil_modelo.Prestamo;
+import Perfil.perfil_modelo.Prestamo;
 
 public class PrestamoRepositorio {
 

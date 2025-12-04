@@ -87,13 +87,13 @@ public class ModeloLogin {
      * @param password La contraseña ingresada.
      * @return true si las credenciales son correctas.
      */
-    public boolean autenticarUsuario(String correo, String password) {
+    public String autenticarUsuario(String correo, String password) {
         String nombre;
         String correoInsti;
         String contra;
 
         String datos = SessionManager.buscarUsuario(correo);
-        if (datos == null) { return false; }
+        if (datos == null) { return ""; }
         String[] datosSeparados = datos.split(" ");
         nombre = datosSeparados[0];
         correoInsti = datosSeparados[1];
@@ -101,7 +101,8 @@ public class ModeloLogin {
 
         boolean contenido = validarFormatoCorreo(correo) && validarPasswordNoVacia(password);
 
-        return correoInsti.equals(correo) && contra.equals(password) && contenido;
+        if (correoInsti.equals(correo) && contra.equals(password) && contenido) { return nombre; }
+        else { return "";}
     }
 
     public boolean verificarCorreo(String correo) {

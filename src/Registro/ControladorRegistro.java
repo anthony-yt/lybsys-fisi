@@ -233,7 +233,7 @@ public class ControladorRegistro {
         
         vistaRegistro.dispose();
         SessionManager.escribirUsuarios(nombreUsuario, correoElectronico, contrasenaTexto);
-        SessionManager.agregarUsuarioActual(correoElectronico);
+        SessionManager.agregarUsuarioActual(nombreUsuario);
         new barraLateral().setVisible(true);
         
         Arrays.fill(contrasenaChars, '\0');

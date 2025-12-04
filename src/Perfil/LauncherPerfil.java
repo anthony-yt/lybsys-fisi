@@ -1,76 +1,81 @@
-package perfil;
+package Perfil;
 
 import javax.swing.SwingUtilities;
 import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 import java.util.List;
-import perfil.io.PrestamoRepositorio;
-import perfil.io.UsuarioRepositorio;
-import perfil.perfil_modelo.Prestamo;
-import perfil.perfil_modelo.Usuario;
+
+import Perfil.io.PrestamoRepositorio;
+import Perfil.io.UsuarioRepositorio;
+
+import Perfil.perfil_modelo.Prestamo;
+import Perfil.perfil_modelo.Usuario;
 
 public class LauncherPerfil {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             try {
-                //aqui se pone logica de registro :v
                 String correoObjetivo = "luima@correo.com";
 
-                Usuario usuario = UsuarioRepositorio.buscarPorCorreo("data/usuarios.csv", correoObjetivo);
+                Usuario usuario = UsuarioRepositorio.buscarPorCorreo(
+                        "data/usuarios.csv",
+                        correoObjetivo
+                );
 
                 List<Prestamo> prestamos = PrestamoRepositorio.cargarPrestamosPorCorreo(
-                        "data/prestamos.csv", usuario.getCorreo());
+                        "data/prestamos.csv",
+                        usuario.getCorreo()
+                );
 
                 PerfilVista vista = new PerfilVista();
                 vista.setUsuario(usuario);
                 vista.mostrarPrestamos(prestamos);
-                
+
                 vista.setAccionesPrestamoListener(bookId -> {
+                    Prestamo encontrado = null;
 
-    Prestamo encontrado = null;
-    for (Prestamo p : prestamos) {
-        if (p.getBookId() == bookId) {
-            encontrado = p;
-            break;
-        }
-    }
+                    for (Prestamo p : prestamos) {
+                        if (p.getBookId() == bookId) {
+                            encontrado = p;
+                            break;
+                        }
+                    }
 
-    if (encontrado != null) {
-        javax.swing.JOptionPane.showMessageDialog(
-            vista,
-            "Leyendo:\n" +
-            "Título: " + encontrado.getTitulo() + "\n" +
-            "Estado: " + encontrado.getEstado() + "\n" +
-            "Vence: " + encontrado.getFechaVencimiento(),
-            "Leer libro",
-            javax.swing.JOptionPane.INFORMATION_MESSAGE
-        );
-    } else {
-        javax.swing.JOptionPane.showMessageDialog(
-            vista,
-            "No encontré el libro con id " + bookId,
-            "Error",
-            javax.swing.JOptionPane.ERROR_MESSAGE
-        );
-    }
-});
+                    if (encontrado != null) {
+                        JOptionPane.showMessageDialog(
+                            vista,
+                            "Leyendo:\n" +
+                            "Título: " + encontrado.getTitulo() + "\n" +
+                            "Estado: " + encontrado.getEstado() + "\n" +
+                            "Vence: " + encontrado.getFechaVencimiento(),
+                            "Leer libro",
+                            JOptionPane.INFORMATION_MESSAGE
+                        );
+                    } else {
+                        JOptionPane.showMessageDialog(
+                            vista,
+                            "No encontré el libro con id " + bookId,
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                        );
+                    }
+                });
 
-                vista.setAccionesPrestamoListener(bookId ->
-                    JOptionPane.showMessageDialog(
-                        vista,
-                        "Mostrando libro con ID: " + bookId,
-                        "Leer",
-                        JOptionPane.INFORMATION_MESSAGE
-                    )
-                );
-
-                vista.setLocationRelativeTo(null);
-                vista.setVisible(true);
+                // ====== Ventana para probar PerfilVista =======
+                JFrame frame = new JFrame("Perfil");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.add(vista);
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
 
             } catch (Exception e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(
-                    null, "Error: " + e.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE
+                    null,
+                    "Error: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
                 );
             }
         });

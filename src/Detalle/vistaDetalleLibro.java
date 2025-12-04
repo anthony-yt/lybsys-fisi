@@ -124,7 +124,6 @@ public class vistaDetalleLibro extends JPanel {
     }
 
     public void navegarCatalogoPorAutor(String autorId) {
-        // TODO: conectar con Nav o ControladorCatalogo
         System.out.println("Navegar al catálogo filtrado por autor: " + autorId);
     }
 

@@ -3,6 +3,9 @@ package Catalogo;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
+import Resena.VistaResenas;
+
 import java.awt.*;
 import java.util.List;
 
@@ -60,7 +63,7 @@ public class vistaCatalogo extends JPanel {
         btnBuscar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         JLabel lblBuscar = new JLabel("🔍");
-        lblBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lblBuscar.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
 
         panelFiltros.add(lblBuscar);
         panelFiltros.add(txtTitulo);
@@ -121,8 +124,8 @@ public class vistaCatalogo extends JPanel {
             JPanel panelVacio = new JPanel(new BorderLayout());
             panelVacio.setBackground(COLOR_FONDO);
             // Mensaje centrado y estilizado para no resultados
-            JLabel lbl = new JLabel("<html><center><h3 style='color:#666'>❌ No se encontraron libros</h3><p>Intenta cambiar los filtros de búsqueda</p></center></html>", SwingConstants.CENTER);
-            lbl.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+            JLabel lbl = new JLabel("<html><center><h3 style='color:#666'>✖️ No se encontraron libros</h3><p>Intenta cambiar los filtros de búsqueda</p></center></html>", SwingConstants.CENTER);
+            lbl.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 16));
             
             // Usar BorderLayout temporalmente para centrar el mensaje
             panelResultados.setLayout(new BorderLayout()); 
@@ -195,7 +198,7 @@ public class vistaCatalogo extends JPanel {
         lblAutor.setForeground(Color.GRAY);
 
         JLabel lblCat = new JLabel("📂 " + libro.getCategoria());
-        lblCat.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+        lblCat.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 11));
         lblCat.setForeground(new Color(0, 102, 204));
 
         panelInfo.add(lblTitulo);
@@ -209,7 +212,7 @@ public class vistaCatalogo extends JPanel {
 
         // Etiqueta de estado
         JLabel lblEstado = new JLabel();
-        lblEstado.setFont(new Font("Segoe UI", Font.BOLD, 11));
+        lblEstado.setFont(new Font("Segoe UI Emoji", Font.BOLD, 11));
         if (libro.getCopiasDisponibles() > 0) {
             lblEstado.setText("✅ Disponible");
             lblEstado.setForeground(new Color(40, 167, 69));
@@ -248,15 +251,25 @@ public class vistaCatalogo extends JPanel {
      */
     private void abrirDetalleLibro(Libro libro) {
         JFrame frameDetalle = new JFrame("BiblioFisi - " + libro.getTitulo());
+        JPanel contenedorDetalles = new JPanel(new BorderLayout());
+
         frameDetalle.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
-        // Instancia la clase de vista de detalle (la moderna)
-        VerDetalleLibro panelDetalle = new VerDetalleLibro(libro, controladorCatalogo);
-        
-        frameDetalle.setContentPane(panelDetalle);
-        frameDetalle.setSize(900, 650); // Tamaño inicial grande para el detalle
-        frameDetalle.setMinimumSize(new Dimension(800, 500));
-        frameDetalle.setLocationRelativeTo(this); 
+        frameDetalle.setContentPane(contenedorDetalles);
+        frameDetalle.setSize(900, 850); // Tamaño inicial grande para el detalle
+        frameDetalle.setMinimumSize(new Dimension(800, 600));
+        frameDetalle.setLocationRelativeTo(this);
         frameDetalle.setVisible(true);
+
+        VerDetalleLibro panelDetalle = new VerDetalleLibro(libro, controladorCatalogo);
+        VistaResenas panelResenas = new VistaResenas(libro.getId(), controladorCatalogo, ControladorPrestamo.obtenerInstancia());
+
+        JPanel centro = new JPanel();
+        centro.setLayout(new BoxLayout(centro, BoxLayout.Y_AXIS));
+
+        centro.add(panelDetalle);
+        centro.add(Box.createVerticalStrut(10)); // separador
+        centro.add(panelResenas);
+
+        contenedorDetalles.add(centro, BorderLayout.CENTER);
     }
 }
